@@ -303,7 +303,7 @@ body{ padding-bottom:44px; }
   <div class="q-card">
     <div class="q-text" id="q-text">Loading...</div>
     <div class="ans-row">
-      <input type="text" class="ans-input" id="ans-input" placeholder="?" autocomplete="off" inputmode="text">
+      <input type="text" class="ans-input" id="ans-input" placeholder="?" autocomplete="off" inputmode="numeric">
       <button class="btn-go-q" id="btn-submit" onclick="submitAnswer()">Go! 🚀</button>
     </div>
     <div class="feedback" id="feedback"></div>
@@ -433,14 +433,14 @@ function genFraction(cfg) {
     } else ans = `${n / g}/${d / g}`;
     return {
       display: `<span class="frac"><span class="num">${a}</span><span class="den">${d}</span></span> + <span class="frac"><span class="num">${b}</span><span class="den">${d}</span></span>`,
-      answer: ans, time: cfg.time + 5
+      answer: ans, time: cfg.time + 5, isFraction: true
     };
   }
   if (type === 2) { // what fraction is X out of Y
     const d = dens[rand(0, 5)], n = rand(1, d - 1), g = gcd(n, d);
     return {
       display: `What fraction is <strong>${n}</strong> out of <strong>${d}</strong>?`,
-      answer: `${n / g}/${d / g}`, time: cfg.time + 5
+      answer: `${n / g}/${d / g}`, time: cfg.time + 5, isFraction: true
     };
   }
   // subtract fractions, same denominator
@@ -448,7 +448,7 @@ function genFraction(cfg) {
   const n = a - b, g = gcd(n, d);
   return {
     display: `<span class="frac"><span class="num">${a}</span><span class="den">${d}</span></span> − <span class="frac"><span class="num">${b}</span><span class="den">${d}</span></span>`,
-    answer: n === 0 ? '0' : `${n / g}/${d / g}`, time: cfg.time + 5
+    answer: n === 0 ? '0' : `${n / g}/${d / g}`, time: cfg.time + 5, isFraction: true
   };
 }
 
@@ -586,7 +586,10 @@ function showQuestion() {
   document.getElementById('q-text').innerHTML = q.display;
   document.getElementById('feedback').textContent = '';
   const inp = document.getElementById('ans-input');
-  inp.value = ''; inp.className = 'ans-input'; inp.disabled = false; inp.focus();
+  inp.value = ''; inp.className = 'ans-input'; inp.disabled = false;
+  // Numeric keyboard for normal questions, text keyboard for fractions (needs / key)
+  inp.inputMode = q.isFraction ? 'text' : 'numeric';
+  inp.focus();
   document.getElementById('btn-submit').disabled = false;
   updateStreak();
   qStartTime = performance.now();
