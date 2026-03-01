@@ -258,6 +258,31 @@ body::after{
 .confetti-piece{position:absolute;width:10px;height:10px;top:-10px;animation:cfall 3s ease-in forwards}
 @keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
+/* ── Game Background Scenes ─────────────── */
+.game-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:opacity .5s}
+.game-bg .gp{position:absolute;border-radius:50%;will-change:transform,opacity}
+
+/* Scene 1: Gentle Stars — slow twinkling dots rising */
+@keyframes s1Rise{0%{transform:translateY(0) scale(1);opacity:.8}50%{opacity:1}100%{transform:translateY(-110vh) scale(.6);opacity:0}}
+/* Scene 2: Moon Dust — particles floating and settling */
+@keyframes s2Float{0%{transform:translate(0,0) scale(1);opacity:.7}25%{transform:translate(15px,-40px) scale(1.2);opacity:1}50%{transform:translate(-10px,-20px) scale(.9);opacity:.8}75%{transform:translate(20px,-60px) scale(1.1);opacity:.6}100%{transform:translate(5px,0) scale(1);opacity:.7}}
+/* Scene 3: Shooting Stars — diagonal streaks */
+@keyframes s3Shoot{0%{transform:translate(0,0) scaleX(1);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translate(-120vw,80vh) scaleX(3);opacity:0}}
+/* Scene 4: Rocket Trails — speed lines downward */
+@keyframes s4Speed{0%{transform:translateY(-20vh) scaleY(1);opacity:0}10%{opacity:.8}90%{opacity:.8}100%{transform:translateY(120vh) scaleY(4);opacity:0}}
+/* Scene 5: Orbiting Planets — circular paths */
+@keyframes s5Orbit{0%{transform:rotate(0deg) translateX(var(--orb-r)) rotate(0deg) scale(var(--orb-s))}100%{transform:rotate(360deg) translateX(var(--orb-r)) rotate(-360deg) scale(var(--orb-s))}}
+/* Scene 6: Asteroid Field — tumbling drift */
+@keyframes s6Tumble{0%{transform:translate(0,0) rotate(0deg);opacity:.7}50%{opacity:.9}100%{transform:translate(var(--drift-x),var(--drift-y)) rotate(720deg);opacity:0}}
+/* Scene 7: Nebula Swirl — large blobs morphing */
+@keyframes s7Morph{0%{transform:translate(0,0) scale(1) rotate(0deg);opacity:.15}33%{transform:translate(30px,-40px) scale(1.3) rotate(120deg);opacity:.25}66%{transform:translate(-20px,30px) scale(.8) rotate(240deg);opacity:.15}100%{transform:translate(0,0) scale(1) rotate(360deg);opacity:.15}}
+/* Scene 8: Galaxy Spiral — rotating particle ring */
+@keyframes s8Spiral{0%{transform:rotate(0deg) translateX(var(--sp-r)) scale(var(--sp-s));opacity:.6}50%{opacity:1}100%{transform:rotate(360deg) translateX(var(--sp-r)) scale(var(--sp-s));opacity:.6}}
+/* Scene 9: Supernova Pulse — expanding rings */
+@keyframes s9Pulse{0%{transform:translate(-50%,-50%) scale(0);opacity:.8;border-width:3px}70%{opacity:.4}100%{transform:translate(-50%,-50%) scale(1);opacity:0;border-width:1px}}
+/* Scene 10: Wormhole — rings zooming outward */
+@keyframes s10Warp{0%{transform:translate(-50%,-50%) scale(0) rotate(0deg);opacity:0}20%{opacity:.7}80%{opacity:.5}100%{transform:translate(-50%,-50%) scale(3) rotate(180deg);opacity:0}}
+
 /* ── Responsive ─────────────────────────── */
 @media(max-width:600px){
   .char-grid{grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}
@@ -338,6 +363,7 @@ body{padding-bottom:44px}
 
 <!-- ═══ GAME ═══ -->
 <div id="game-screen" class="screen">
+  <div class="game-bg" id="game-bg"></div>
   <div class="game-hud">
     <div class="hud-item"><span id="hud-char-emoji"></span> <span id="hud-level-name"></span></div>
     <div class="hud-item">❓ <span id="hud-qnum">1</span>/<span id="hud-qtotal">10</span></div>
@@ -587,8 +613,8 @@ function updateNav() {
 }
 
 function goBack() {
-  // Stop timer if leaving game
-  if (currentScreen === 'game-screen') clearInterval(timerInterval);
+  // Stop timer and clear bg if leaving game
+  if (currentScreen === 'game-screen') { clearInterval(timerInterval); clearGameBg(); }
   if (screenHistory.length > 1) {
     screenHistory.pop();
     const prev = screenHistory[screenHistory.length - 1];
@@ -598,6 +624,7 @@ function goBack() {
 
 function goHome() {
   clearInterval(timerInterval);
+  clearGameBg();
   screenHistory.length = 0;
   screenHistory.push('char-screen');
   showScreen('char-screen', false);
@@ -650,6 +677,263 @@ function renderLevelGrid() {
   });
 }
 
+// ── Character Colour Palettes ────────────────────
+// Each character gets 3 colours: primary, secondary, accent
+const PALETTES = {
+  'astro-cat':       ['#ff6b35','#ff9a3c','#ffd166'],
+  'cosmic-fox':      ['#ff4500','#ff7043','#ffab40'],
+  'star-wolf':       ['#546e7a','#90a4ae','#b0bec5'],
+  'nebula-bear':     ['#8d6e63','#bcaaa4','#d7ccc8'],
+  'rocket-bunny':    ['#f48fb1','#f8bbd0','#fce4ec'],
+  'lunar-panda':     ['#e0e0e0','#bdbdbd','#9575cd'],
+  'galaxy-lion':     ['#ffa000','#ffc107','#ffe082'],
+  'comet-tiger':     ['#ff6f00','#ff8f00','#ffca28'],
+  'orbit-owl':       ['#5c6bc0','#7986cb','#c5cae9'],
+  'solar-eagle':     ['#f9a825','#fdd835','#fff9c4'],
+  'meteor-monkey':   ['#d84315','#ff5722','#ff8a65'],
+  'void-dragon':     ['#6a1b9a','#ab47bc','#e040fb'],
+  'plasma-penguin':  ['#0277bd','#039be5','#4fc3f7'],
+  'quasar-koala':    ['#607d8b','#90a4ae','#cfd8dc'],
+  'pulsar-dolphin':  ['#0097a7','#00bcd4','#80deea'],
+  'warp-whale':      ['#01579b','#0288d1','#4dd0e1'],
+  'nova-unicorn':    ['#e91e63','#f06292','#f8bbd0'],
+  'turbo-turtle':    ['#2e7d32','#4caf50','#a5d6a7'],
+  'blaze-bee':       ['#f9a825','#ffeb3b','#fff176'],
+  'flare-frog':      ['#1b5e20','#43a047','#81c784'],
+  'zenith-zebra':    ['#212121','#eeeeee','#9e9e9e'],
+  'dark-bat':        ['#311b92','#512da8','#9575cd'],
+  'hyper-hamster':   ['#ff8a80','#ff5252','#ffcdd2'],
+  'gravity-gorilla': ['#4e342e','#795548','#a1887f'],
+  'spark-shark':     ['#263238','#455a64','#00bfa5'],
+  'thunder-rex':     ['#bf360c','#e64a19','#ff8a65'],
+  'photon-phoenix':  ['#dd2c00','#ff3d00','#ff9e80'],
+  'astro-alien':     ['#76ff03','#b2ff59','#ccff90'],
+  'robo-ranger':     ['#00e676','#69f0ae','#b9f6ca'],
+  'captain-croc':    ['#558b2f','#7cb342','#aed581'],
+  'eclipse-elk':     ['#3e2723','#6d4c41','#d7ccc8'],
+  'dash-dog':        ['#ff6e40','#ff9e80','#ffd180'],
+  'space-kitten':    ['#f48fb1','#ce93d8','#b39ddb'],
+  'star-sloth':      ['#a1887f','#bcaaa4','#d7ccc8'],
+  'jet-jellyfish':   ['#00b8d4','#00e5ff','#84ffff'],
+  'astro-octopus':   ['#e040fb','#ea80fc','#b388ff'],
+};
+
+// ── Scene Generators (one per level) ─────────────
+// Each returns an array of DOM elements with inline styles + animations
+// All use --c1, --c2, --c3 custom properties from the character palette
+
+function buildScene(level, palette) {
+  const [c1, c2, c3] = palette;
+  const bg = document.getElementById('game-bg');
+  bg.innerHTML = '';
+  bg.style.setProperty('--c1', c1);
+  bg.style.setProperty('--c2', c2);
+  bg.style.setProperty('--c3', c3);
+
+  const builders = [buildScene1, buildScene2, buildScene3, buildScene4, buildScene5,
+                    buildScene6, buildScene7, buildScene8, buildScene9, buildScene10];
+  builders[level - 1](bg, c1, c2, c3);
+}
+
+// 1. Gentle Stars — soft dots rising slowly
+function buildScene1(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 30; i++) {
+    const p = mk(bg);
+    const s = 2 + Math.random() * 5;
+    Object.assign(p.style, {
+      width: s+'px', height: s+'px', left: Math.random()*100+'%', top: (80+Math.random()*30)+'%',
+      background: cols[i%3], boxShadow: `0 0 ${s*2}px ${cols[i%3]}`,
+      animation: `s1Rise ${8+Math.random()*12}s linear ${Math.random()*8}s infinite`,
+      opacity: 0.6+Math.random()*0.4
+    });
+  }
+}
+
+// 2. Moon Dust — floating particles gently drifting
+function buildScene2(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 25; i++) {
+    const p = mk(bg);
+    const s = 3 + Math.random() * 8;
+    Object.assign(p.style, {
+      width: s+'px', height: s+'px', left: Math.random()*100+'%', top: Math.random()*100+'%',
+      background: cols[i%3], borderRadius: '50%',
+      boxShadow: `0 0 ${s}px ${cols[i%3]}40`,
+      animation: `s2Float ${4+Math.random()*6}s ease-in-out ${Math.random()*4}s infinite`,
+    });
+  }
+}
+
+// 3. Shooting Stars — diagonal streaks
+function buildScene3(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 12; i++) {
+    const p = mk(bg);
+    const w = 40 + Math.random() * 80;
+    Object.assign(p.style, {
+      width: w+'px', height: '2px', left: (80+Math.random()*40)+'%', top: Math.random()*60+'%',
+      background: `linear-gradient(90deg, ${cols[i%3]}, transparent)`,
+      borderRadius: '2px', transform: 'rotate(-35deg)',
+      animation: `s3Shoot ${1.5+Math.random()*2.5}s linear ${Math.random()*6}s infinite`,
+    });
+  }
+}
+
+// 4. Rocket Trails — vertical speed lines rushing down
+function buildScene4(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 20; i++) {
+    const p = mk(bg);
+    const h = 30 + Math.random() * 80;
+    Object.assign(p.style, {
+      width: '2px', height: h+'px', left: Math.random()*100+'%', top: '-10%',
+      background: `linear-gradient(180deg, ${cols[i%3]}, transparent)`,
+      borderRadius: '2px',
+      animation: `s4Speed ${0.8+Math.random()*1.2}s linear ${Math.random()*3}s infinite`,
+    });
+  }
+}
+
+// 5. Orbiting Planets — circles on orbital paths
+function buildScene5(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 10; i++) {
+    const p = mk(bg);
+    const s = 8 + Math.random() * 20;
+    const r = 60 + Math.random() * 180;
+    p.style.cssText = `
+      position:absolute;width:${s}px;height:${s}px;border-radius:50%;
+      left:50%;top:50%;margin-left:${-s/2}px;margin-top:${-s/2}px;
+      background:radial-gradient(circle at 35% 35%,${cols[i%3]},${cols[(i+1)%3]}80);
+      box-shadow:0 0 ${s}px ${cols[i%3]}50;
+      --orb-r:${r}px;--orb-s:${0.6+Math.random()*0.6};
+      animation:s5Orbit ${6+Math.random()*10}s linear ${Math.random()*4}s infinite;
+    `;
+  }
+}
+
+// 6. Asteroid Field — tumbling polygonal shapes
+function buildScene6(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 18; i++) {
+    const p = mk(bg);
+    const s = 6 + Math.random() * 18;
+    const dx = (-150 + Math.random()*300);
+    const dy = (-150 + Math.random()*300);
+    p.style.cssText = `
+      position:absolute;width:${s}px;height:${s}px;
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      background:${cols[i%3]};border-radius:${Math.random()>.5?'30%':'4px'};
+      box-shadow:0 0 ${s/2}px ${cols[i%3]}40;
+      --drift-x:${dx}px;--drift-y:${dy}px;
+      animation:s6Tumble ${5+Math.random()*8}s linear ${Math.random()*5}s infinite;
+    `;
+  }
+}
+
+// 7. Nebula Swirl — large translucent blobs morphing
+function buildScene7(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  for (let i = 0; i < 6; i++) {
+    const p = mk(bg);
+    const s = 150 + Math.random() * 250;
+    p.style.cssText = `
+      position:absolute;width:${s}px;height:${s}px;border-radius:50%;
+      left:${Math.random()*80}%;top:${Math.random()*80}%;
+      background:radial-gradient(circle,${cols[i%3]}40,${cols[(i+1)%3]}20,transparent 70%);
+      filter:blur(${30+Math.random()*40}px);
+      animation:s7Morph ${10+Math.random()*10}s ease-in-out ${Math.random()*5}s infinite;
+    `;
+  }
+}
+
+// 8. Galaxy Spiral — particles rotating in spiral arms
+function buildScene8(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  // Central glow
+  const center = mk(bg);
+  center.style.cssText = `
+    position:absolute;left:50%;top:50%;width:60px;height:60px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,${c1}80,${c2}40,transparent 70%);
+    filter:blur(15px);
+  `;
+  for (let i = 0; i < 24; i++) {
+    const p = mk(bg);
+    const s = 3 + Math.random() * 6;
+    const r = 30 + i * 8 + Math.random()*30;
+    p.style.cssText = `
+      position:absolute;width:${s}px;height:${s}px;border-radius:50%;
+      left:50%;top:50%;margin-left:${-s/2}px;margin-top:${-s/2}px;
+      background:${cols[i%3]};box-shadow:0 0 ${s*2}px ${cols[i%3]};
+      --sp-r:${r}px;--sp-s:${0.5+Math.random()*0.8};
+      animation:s8Spiral ${4+i*0.3}s linear ${Math.random()*2}s infinite;
+    `;
+  }
+}
+
+// 9. Supernova Pulse — expanding rings from center
+function buildScene9(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  // Core flash
+  const core = mk(bg);
+  core.style.cssText = `
+    position:absolute;left:50%;top:50%;width:30px;height:30px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,#fff,${c1},transparent);
+    box-shadow:0 0 40px ${c1},0 0 80px ${c2};
+    animation:twinkle 2s ease-in-out infinite alternate;
+  `;
+  for (let i = 0; i < 8; i++) {
+    const p = mk(bg);
+    const maxSize = 300 + Math.random()*200;
+    p.style.cssText = `
+      position:absolute;left:50%;top:50%;width:${maxSize}px;height:${maxSize}px;
+      border-radius:50%;background:transparent;
+      border:3px solid ${cols[i%3]};
+      box-shadow:0 0 15px ${cols[i%3]}60,inset 0 0 15px ${cols[i%3]}30;
+      animation:s9Pulse ${3+Math.random()*2}s ease-out ${i*0.5}s infinite;
+    `;
+  }
+}
+
+// 10. Wormhole — concentric rings zooming outward with rotation
+function buildScene10(bg, c1, c2, c3) {
+  const cols = [c1, c2, c3];
+  // Deep core
+  const core = mk(bg);
+  core.style.cssText = `
+    position:absolute;left:50%;top:50%;width:20px;height:20px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,#fff,${c1}80,transparent);
+    box-shadow:0 0 30px ${c1},0 0 60px ${c2}80;
+  `;
+  for (let i = 0; i < 12; i++) {
+    const p = mk(bg);
+    const maxSize = 200 + Math.random()*300;
+    p.style.cssText = `
+      position:absolute;left:50%;top:50%;width:${maxSize}px;height:${maxSize}px;
+      border-radius:50%;background:transparent;
+      border:2px solid ${cols[i%3]}90;
+      box-shadow:0 0 10px ${cols[i%3]}40;
+      animation:s10Warp ${2+Math.random()*3}s linear ${i*0.35}s infinite;
+    `;
+  }
+}
+
+function mk(parent) {
+  const d = document.createElement('div');
+  d.className = 'gp';
+  parent.appendChild(d);
+  return d;
+}
+
+function clearGameBg() {
+  const bg = document.getElementById('game-bg');
+  if (bg) bg.innerHTML = '';
+}
+
 // ── Game ─────────────────────────────────────────
 function startGame(level) {
   gameLevel = level;
@@ -659,6 +943,9 @@ function startGame(level) {
   document.getElementById('hud-char-emoji').textContent = selectedChar?.emoji || '👾';
   document.getElementById('hud-level-name').textContent = cfg.name;
   document.getElementById('hud-qtotal').textContent = questions.length;
+  // Build animated background based on character + level
+  const palette = PALETTES[selectedChar?.id] || ['#7c3aed','#3b82f6','#22d3ee'];
+  buildScene(level, palette);
   showScreen('game-screen');
   showQuestion();
 }
@@ -760,6 +1047,7 @@ function updateStreak() {
 // ── End game & results ───────────────────────────
 function endGame() {
   clearInterval(timerInterval);
+  clearGameBg();
   const s = calculateScore(gameLevel, roundResults);
   const pct = s.totalQuestions > 0 ? Math.round(s.correctCount / s.totalQuestions * 100) : 0;
 
