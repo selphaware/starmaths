@@ -59,6 +59,25 @@ body::after{
 @keyframes ob2{0%{transform:translateY(0)}50%{transform:translateY(10px) translateX(-10px)}100%{transform:translateY(0)}}
 @keyframes ob3{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-15px) rotate(5deg)}100%{transform:translateY(0) rotate(0deg)}}
 
+/* ── Nav Bar ────────────────────────────── */
+.nav-bar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;gap:6px;
+  padding:10px 14px;
+  background:linear-gradient(to bottom,rgba(10,14,39,.9),rgba(10,14,39,0));
+  pointer-events:none;
+}
+.nav-bar.hidden{display:none}
+.nav-btn{
+  pointer-events:auto;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:7px 16px;color:var(--moon);
+  font-family:var(--ff);font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s;
+  display:flex;align-items:center;gap:4px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.nav-btn:hover{background:rgba(255,255,255,.15);border-color:var(--cyan)}
+
 /* ── Screens ────────────────────────────── */
 .screen{display:none;position:relative;z-index:1;min-height:100vh;padding:20px}
 .screen.active{display:flex;flex-direction:column;align-items:center}
@@ -72,8 +91,6 @@ body::after{
 }
 @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .subtitle{font-size:1.05rem;opacity:.7;text-align:center}
-.rocket-float{font-size:3.5rem;text-align:center;animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
 .btn-primary{
   background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:16px;
@@ -87,8 +104,46 @@ body::after{
 .btn-secondary:hover{border-color:var(--cyan)}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 
+/* ── Quasar ─────────────────────────────── */
+.quasar-wrap{position:relative;width:130px;height:130px;margin:10px auto 6px}
+.quasar-core{
+  position:absolute;top:50%;left:50%;width:32px;height:32px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,#fff 0%,var(--cyan) 40%,var(--purple) 80%,transparent 100%);
+  box-shadow:0 0 30px 10px rgba(34,211,238,.5),0 0 60px 20px rgba(124,58,237,.3);
+}
+.quasar-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:var(--cyan);border-right-color:rgba(124,58,237,.5);
+  animation:qspin 3s linear infinite;
+  filter:drop-shadow(0 0 6px rgba(34,211,238,.6));
+}
+.quasar-ring2{
+  position:absolute;inset:12px;border-radius:50%;
+  border:2px solid transparent;
+  border-bottom-color:var(--pink);border-left-color:rgba(251,191,36,.4);
+  animation:qspin 2s linear infinite reverse;
+  filter:drop-shadow(0 0 4px rgba(236,72,153,.5));
+}
+.quasar-ring3{
+  position:absolute;inset:24px;border-radius:50%;
+  border:1.5px solid transparent;
+  border-top-color:var(--gold);border-left-color:rgba(34,211,238,.3);
+  animation:qspin 4.5s linear infinite;
+  filter:drop-shadow(0 0 4px rgba(251,191,36,.5));
+}
+.quasar-jet{
+  position:absolute;top:50%;left:50%;width:180px;height:6px;
+  transform:translate(-50%,-50%);
+  background:linear-gradient(90deg,transparent 0%,rgba(34,211,238,.35) 20%,rgba(124,58,237,.55) 50%,rgba(34,211,238,.35) 80%,transparent 100%);
+  border-radius:50%;filter:blur(2px);
+  animation:qspin 3s linear infinite;
+}
+@keyframes qspin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
 /* ── Character Select ───────────────────── */
-#char-screen{justify-content:center;gap:20px;padding:30px 20px}
+#char-screen{justify-content:center;gap:16px;padding:20px 20px 60px}
 .char-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
   gap:10px;max-width:850px;width:100%;
@@ -105,7 +160,7 @@ body::after{
 .btn-go{margin-top:10px;font-size:1.15rem;padding:16px 50px}
 
 /* ── Level Select ───────────────────────── */
-#level-screen{gap:20px;padding-top:20px}
+#level-screen{gap:20px;padding:54px 20px 60px}
 .level-header{display:flex;align-items:center;gap:12px;margin-bottom:4px}
 .level-header .avatar{font-size:2.2rem}
 .level-header h2{font-size:1.3rem;font-weight:700}
@@ -123,12 +178,13 @@ body::after{
 .lv-mult{display:inline-block;background:rgba(251,191,36,.15);color:var(--gold);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:8px;margin-top:6px}
 
 /* ── Game Screen ────────────────────────── */
-#game-screen{justify-content:center;gap:18px}
+#game-screen{justify-content:center;gap:18px;padding:54px 20px 60px}
 .game-hud{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:620px;gap:8px;flex-wrap:wrap}
 .hud-item{background:var(--light);border-radius:14px;padding:8px 14px;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:5px;border:1px solid rgba(255,255,255,.06)}
 .timer-wrap{width:100%;max-width:620px;height:10px;background:var(--light);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
-.timer-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .1s linear,background .5s}
-.timer-bar.warn{background:linear-gradient(90deg,var(--orange),var(--red))}
+.timer-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .1s linear,background .3s}
+.timer-bar.slow{background:linear-gradient(90deg,var(--orange),var(--gold))}
+.timer-bar.very-slow{background:linear-gradient(90deg,var(--red),var(--orange))}
 .q-card{
   background:linear-gradient(145deg,var(--light),rgba(30,38,80,.8));
   border:2px solid rgba(255,255,255,.08);border-radius:24px;padding:36px 28px;
@@ -137,6 +193,17 @@ body::after{
 }
 .q-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(124,58,237,.08),transparent 60%);pointer-events:none}
 .q-text{font-size:clamp(1.8rem,5vw,3rem);font-weight:700;line-height:1.4;position:relative}
+/* ── Colour-coded operators ──── */
+.q-text .op{
+  display:inline-block;font-weight:700;margin:0 .15em;
+  padding:2px 8px;border-radius:10px;font-family:var(--fm);
+  vertical-align:middle;letter-spacing:0;line-height:1;
+}
+.q-text .op-plus{color:#22ff88;background:rgba(34,255,136,.12);text-shadow:0 0 8px rgba(34,255,136,.4)}
+.q-text .op-minus{color:#ff6b8a;background:rgba(255,107,138,.12);text-shadow:0 0 8px rgba(255,107,138,.4)}
+.q-text .op-times{color:#ffaa22;background:rgba(255,170,34,.12);text-shadow:0 0 8px rgba(255,170,34,.4)}
+.q-text .op-divide{color:#44ccff;background:rgba(68,204,255,.12);text-shadow:0 0 8px rgba(68,204,255,.4)}
+.q-text .op-bracket{color:#c084fc;background:rgba(192,132,252,.1)}
 .q-text .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 6px;font-size:.7em;line-height:1}
 .q-text .frac .num{border-bottom:3px solid var(--moon);padding:0 6px 4px}
 .q-text .frac .den{padding:4px 6px 0}
@@ -158,7 +225,7 @@ body::after{
 .streak-line{font-size:.95rem;font-weight:600;color:var(--gold);min-height:1.4em}
 
 /* ── Results Screen ─────────────────────── */
-#results-screen{justify-content:center;gap:20px;padding:20px}
+#results-screen{justify-content:center;gap:20px;padding:54px 20px 60px}
 .results-card{
   background:linear-gradient(145deg,var(--light),var(--mid));border:2px solid rgba(255,255,255,.08);
   border-radius:28px;padding:36px 28px;text-align:center;width:100%;max-width:540px;
@@ -166,25 +233,21 @@ body::after{
 .res-emoji{font-size:4rem;margin-bottom:8px}
 .res-title{font-size:1.8rem;font-weight:700;margin-bottom:4px}
 .res-sub{font-size:.95rem;opacity:.7;margin-bottom:20px}
-
 .score-hero{
   font-size:3rem;font-weight:700;margin:10px 0 4px;
   background:linear-gradient(135deg,var(--gold),var(--orange));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .score-label{font-size:.8rem;opacity:.5;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}
-
 .res-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
 .rs{background:rgba(255,255,255,.04);border-radius:14px;padding:12px 8px}
 .rs .v{font-size:1.4rem;font-weight:700}
 .rs .l{font-size:.68rem;opacity:.5;margin-top:2px}
 .rs .v.gold{color:var(--gold)}.rs .v.green{color:var(--green)}.rs .v.cyan{color:var(--cyan)}.rs .v.pink{color:var(--pink)}.rs .v.orange{color:var(--orange)}
-
 .score-breakdown{text-align:left;margin:16px 0;font-size:.8rem;opacity:.7}
 .score-breakdown h4{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;opacity:.5;margin-bottom:6px}
 .sb-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .sb-row.perfect{color:var(--gold);font-weight:700}
-
 .perfect-banner{
   background:linear-gradient(135deg,var(--gold),var(--orange));color:var(--deep);
   border-radius:14px;padding:12px;font-weight:700;font-size:1rem;margin-bottom:10px;animation:pop .5s ease;
@@ -204,74 +267,59 @@ body::after{
   .ans-input{width:140px;font-size:1.2rem}
   .results-card{padding:20px 14px}
   .res-stats{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .quasar-wrap{width:100px;height:100px}
+  .quasar-core{width:24px;height:24px}
+  .quasar-jet{width:130px;height:5px}
 }
 .fade-in{animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-/* ── Dedication footer: continuous spectrum flow ───────────── */
-body{ padding-bottom:44px; }
 
+/* ── Dedication footer ──────────────────── */
+body{padding-bottom:44px}
 .dedication{
-  position:fixed;
-  left:0; right:0; bottom:0;
-  z-index:2;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:10px 12px;
-  text-align:center;
-  font: 600 12.5px/1.2 var(--ff);
-  letter-spacing:.25px;
-  opacity:.75;
+  position:fixed;left:0;right:0;bottom:0;z-index:2;
+  display:flex;justify-content:center;align-items:center;
+  padding:10px 12px;text-align:center;
+  font:600 12.5px/1.2 var(--ff);letter-spacing:.25px;opacity:.75;
   pointer-events:none;
-  background: linear-gradient(to top, rgba(10,14,39,.55), rgba(10,14,39,0));
+  background:linear-gradient(to top,rgba(10,14,39,.55),rgba(10,14,39,0));
 }
-
 .dedication .dedicationText{
-  display:inline-block !important;
-
-  /* repeating pattern = always multiple colours visible */
-  background-image: repeating-linear-gradient(90deg,
-    #ff4d4d 0%,    #ff4d4d 12.5%,
-    #ffb84d 12.5%, #ffb84d 25%,
-    #fff44d 25%,   #fff44d 37.5%,
-    #4dff88 37.5%, #4dff88 50%,
-    #4dd2ff 50%,   #4dd2ff 62.5%,
-    #6a5cff 62.5%, #6a5cff 75%,
-    #ff4df3 75%,   #ff4df3 87.5%,
-    #ff4d4d 87.5%, #ff4d4d 100%
-  ) !important;
-
-  /* key: fixed pixel repeat length + animate exactly that length */
-  --flow: 900px;
-  background-size: var(--flow) 100% !important;
-  background-position: 0 50% !important;
-
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent !important;
-
-  animation: spectrumFlow 8s linear infinite !important;
-  will-change: background-position;
+  display:inline-block!important;
+  background-image:repeating-linear-gradient(90deg,
+    #ff4d4d 0%,#ff4d4d 12.5%,#ffb84d 12.5%,#ffb84d 25%,
+    #fff44d 25%,#fff44d 37.5%,#4dff88 37.5%,#4dff88 50%,
+    #4dd2ff 50%,#4dd2ff 62.5%,#6a5cff 62.5%,#6a5cff 75%,
+    #ff4df3 75%,#ff4df3 87.5%,#ff4d4d 87.5%,#ff4d4d 100%
+  )!important;
+  --flow:900px;background-size:var(--flow) 100%!important;background-position:0 50%!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  color:transparent!important;-webkit-text-fill-color:transparent!important;
+  animation:spectrumFlow 8s linear infinite!important;will-change:background-position;
 }
-
-@keyframes spectrumFlow{
-  from { background-position: 0 50%; }
-  to   { background-position: calc(-1 * var(--flow)) 50%; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .dedication .dedicationText{ animation:none !important; }
-}
+@keyframes spectrumFlow{from{background-position:0 50%}to{background-position:calc(-1*var(--flow)) 50%}}
+@media(prefers-reduced-motion:reduce){.dedication .dedicationText{animation:none!important}}
 </style>
 </head>
 <body>
 <div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div>
 <div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div>
 
-<!-- ═══ CHARACTER SELECT ═══ -->
+<!-- ═══ NAV BAR (hidden on home) ═══ -->
+<div class="nav-bar hidden" id="nav-bar">
+  <button class="nav-btn" id="nav-back" onclick="goBack()">← Back</button>
+  <button class="nav-btn" id="nav-home" onclick="goHome()">🏠 Home</button>
+</div>
+
+<!-- ═══ CHARACTER SELECT (HOME) ═══ -->
 <div id="char-screen" class="screen active">
-  <div class="rocket-float">🚀</div>
+  <div class="quasar-wrap">
+    <div class="quasar-jet"></div>
+    <div class="quasar-ring"></div>
+    <div class="quasar-ring2"></div>
+    <div class="quasar-ring3"></div>
+    <div class="quasar-core"></div>
+  </div>
   <h1 class="title">Star Maths</h1>
   <p class="subtitle">Pick your space explorer!</p>
   <div class="char-grid" id="char-grid"></div>
@@ -286,9 +334,6 @@ body{ padding-bottom:44px; }
   </div>
   <p class="subtitle" style="margin-bottom:10px">Pick any mission — they're all open!</p>
   <div class="level-grid" id="level-grid"></div>
-  <div style="margin-top:16px">
-    <button class="btn-secondary" onclick="showScreen('char-screen')">← Change Explorer</button>
-  </div>
 </div>
 
 <!-- ═══ GAME ═══ -->
@@ -297,7 +342,7 @@ body{ padding-bottom:44px; }
     <div class="hud-item"><span id="hud-char-emoji"></span> <span id="hud-level-name"></span></div>
     <div class="hud-item">❓ <span id="hud-qnum">1</span>/<span id="hud-qtotal">10</span></div>
     <div class="hud-item">✅ <span id="hud-correct">0</span></div>
-    <div class="hud-item">⏱ <span id="hud-timer">30</span>s</div>
+    <div class="hud-item">⏱ <span id="hud-timer">0.0</span>s</div>
   </div>
   <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
   <div class="q-card">
@@ -317,7 +362,7 @@ body{ padding-bottom:44px; }
   <div class="btn-row" style="margin-top:6px">
     <button class="btn-primary" id="btn-again">Play Again 🚀</button>
     <button class="btn-secondary" onclick="showScreen('level-screen')">All Missions 🗺️</button>
-    <button class="btn-secondary" onclick="showScreen('char-screen')">Change Explorer 🎭</button>
+    <button class="btn-secondary" onclick="goHome()">Change Explorer 🎭</button>
   </div>
 </div>
 
@@ -387,42 +432,49 @@ const LEVELS = [
   {id:10, name:'Universe Commander',  age:'9-10', ops:['+','-','×','÷'],    maxNum:500, time:10, count:18, fractions:true,  brackets:true,  multiplier:5.0},
 ];
 
+// ── Styled operator helpers ──────────────────────
+const OP = {
+  plus:   '<span class="op op-plus">+</span>',
+  minus:  '<span class="op op-minus">&minus;</span>',
+  times:  '<span class="op op-times">&times;</span>',
+  divide: '<span class="op op-divide">&divide;</span>',
+  lp:     '<span class="op op-bracket">(</span>',
+  rp:     '<span class="op op-bracket">)</span>',
+};
+
 // ── Random question generation ───────────────────
 function rand(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; }
 
 function generateQuestion(level) {
   const cfg = LEVELS[level - 1];
-  // 25% chance of fraction question if enabled
   if (cfg.fractions && Math.random() < 0.25) return genFraction(cfg);
-  // 25% chance of bracket question if enabled
   if (cfg.brackets && Math.random() < 0.25) return genBracket(cfg);
-  // Normal arithmetic
   const op = cfg.ops[rand(0, cfg.ops.length - 1)];
   let a, b, answer, display;
   switch (op) {
     case '+':
       a = rand(1, cfg.maxNum); b = rand(1, cfg.maxNum);
-      answer = a + b; display = `${a} + ${b}`; break;
+      answer = a + b; display = `${a} ${OP.plus} ${b}`; break;
     case '-':
       a = rand(1, cfg.maxNum); b = rand(1, a);
-      answer = a - b; display = `${a} − ${b}`; break;
+      answer = a - b; display = `${a} ${OP.minus} ${b}`; break;
     case '×':
       a = rand(1, Math.min(cfg.maxNum, 12)); b = rand(1, Math.min(cfg.maxNum, 12));
-      answer = a * b; display = `${a} × ${b}`; break;
+      answer = a * b; display = `${a} ${OP.times} ${b}`; break;
     case '÷':
       b = rand(1, Math.min(cfg.maxNum, 12));
       answer = rand(1, Math.min(cfg.maxNum, 12));
       a = b * answer;
-      display = `${a} ÷ ${b}`; break;
+      display = `${a} ${OP.divide} ${b}`; break;
   }
-  return { display, answer: String(answer), time: cfg.time };
+  return { display, answer: String(answer), parTime: cfg.time };
 }
 
 function genFraction(cfg) {
   const type = rand(1, 3);
   const dens = [2, 3, 4, 5, 6, 8];
-  if (type === 1) { // add fractions, same denominator
+  if (type === 1) {
     const d = dens[rand(0, 5)], a = rand(1, d - 1), b = rand(1, d - 1);
     const n = a + b, g = gcd(n, d);
     let ans;
@@ -432,41 +484,40 @@ function genFraction(cfg) {
       else { const g2 = gcd(r, d); ans = `${w} ${r / g2}/${d / g2}`; }
     } else ans = `${n / g}/${d / g}`;
     return {
-      display: `<span class="frac"><span class="num">${a}</span><span class="den">${d}</span></span> + <span class="frac"><span class="num">${b}</span><span class="den">${d}</span></span>`,
-      answer: ans, time: cfg.time + 5, isFraction: true
+      display: `<span class="frac"><span class="num">${a}</span><span class="den">${d}</span></span> ${OP.plus} <span class="frac"><span class="num">${b}</span><span class="den">${d}</span></span>`,
+      answer: ans, parTime: cfg.time + 5, isFraction: true
     };
   }
-  if (type === 2) { // what fraction is X out of Y
+  if (type === 2) {
     const d = dens[rand(0, 5)], n = rand(1, d - 1), g = gcd(n, d);
     return {
       display: `What fraction is <strong>${n}</strong> out of <strong>${d}</strong>?`,
-      answer: `${n / g}/${d / g}`, time: cfg.time + 5, isFraction: true
+      answer: `${n / g}/${d / g}`, parTime: cfg.time + 5, isFraction: true
     };
   }
-  // subtract fractions, same denominator
   const d = dens[rand(0, 5)], a = rand(2, d - 1), b = rand(1, a - 1);
   const n = a - b, g = gcd(n, d);
   return {
-    display: `<span class="frac"><span class="num">${a}</span><span class="den">${d}</span></span> − <span class="frac"><span class="num">${b}</span><span class="den">${d}</span></span>`,
-    answer: n === 0 ? '0' : `${n / g}/${d / g}`, time: cfg.time + 5, isFraction: true
+    display: `<span class="frac"><span class="num">${a}</span><span class="den">${d}</span></span> ${OP.minus} <span class="frac"><span class="num">${b}</span><span class="den">${d}</span></span>`,
+    answer: n === 0 ? '0' : `${n / g}/${d / g}`, parTime: cfg.time + 5, isFraction: true
   };
 }
 
 function genBracket(cfg) {
   const templates = [
-    () => { const a=rand(1,10),b=rand(1,10),c=rand(2,5); return {display:`${c} × (${a} + ${b})`,answer:String(c*(a+b))}; },
-    () => { const a=rand(5,20),b=rand(1,5),c=rand(1,5); return {display:`(${a} − ${b}) × ${c}`,answer:String((a-b)*c)}; },
-    () => { const a=rand(2,10),b=rand(2,10),c=rand(1,5); return {display:`(${a} + ${b}) ÷ ${c}`,answer:String((a+b)/c)}; },
-    () => { const a=rand(1,8),b=rand(1,8),c=rand(1,5); return {display:`${a} + (${b} × ${c})`,answer:String(a+b*c)}; },
+    () => { const a=rand(1,10),b=rand(1,10),c=rand(2,5); return {display:`${c} ${OP.times} ${OP.lp}${a} ${OP.plus} ${b}${OP.rp}`,answer:String(c*(a+b))}; },
+    () => { const a=rand(5,20),b=rand(1,5),c=rand(1,5); return {display:`${OP.lp}${a} ${OP.minus} ${b}${OP.rp} ${OP.times} ${c}`,answer:String((a-b)*c)}; },
+    () => { const a=rand(2,10),b=rand(2,10),c=rand(1,5); return {display:`${OP.lp}${a} ${OP.plus} ${b}${OP.rp} ${OP.divide} ${c}`,answer:String((a+b)/c)}; },
+    () => { const a=rand(1,8),b=rand(1,8),c=rand(1,5); return {display:`${a} ${OP.plus} ${OP.lp}${b} ${OP.times} ${c}${OP.rp}`,answer:String(a+b*c)}; },
   ];
   for (let i = 0; i < 20; i++) {
     const q = templates[rand(0, templates.length - 1)]();
     const v = Number(q.answer);
     if (Number.isInteger(v) && v >= 0 && v <= 1000)
-      return { display: q.display, answer: q.answer, time: cfg.time + 5 };
+      return { display: q.display, answer: q.answer, parTime: cfg.time + 5 };
   }
   const a=rand(2,5),b=rand(1,5),c=rand(1,5);
-  return { display:`${a} × (${b} + ${c})`, answer:String(a*(b+c)), time:cfg.time+5 };
+  return { display:`${a} ${OP.times} ${OP.lp}${b} ${OP.plus} ${c}${OP.rp}`, answer:String(a*(b+c)), parTime:cfg.time+5 };
 }
 
 function generateQuestionSet(level) {
@@ -477,7 +528,6 @@ function generateQuestionSet(level) {
 }
 
 // ── Scoring (time + complexity) ──────────────────
-// 100 base × multiplier × speed_bonus + streak_bonus + perfect_bonus
 function calculateScore(level, results) {
   const cfg = LEVELS[level - 1];
   let total = 0, streak = 0, best = 0;
@@ -485,8 +535,7 @@ function calculateScore(level, results) {
     if (r.correct) {
       streak++;
       if (streak > best) best = streak;
-      // Speed: ratio of allowed/taken, clamped 0.5–3.0
-      const speed = Math.min(Math.max(r.timeAllowed / Math.max(r.timeTaken, 0.5), 0.5), 3.0);
+      const speed = Math.min(Math.max(r.parTime / Math.max(r.timeTaken, 0.5), 0.5), 3.0);
       const streakBonus = Math.min(streak - 1, 10) * 50;
       total += Math.round((100 * cfg.multiplier * speed) + (streakBonus * cfg.multiplier));
     } else { streak = 0; }
@@ -508,14 +557,50 @@ function calculateScore(level, results) {
 // ── State ────────────────────────────────────────
 let selectedChar = null;
 let questions = [], curQ = 0, correctCount = 0, curStreak = 0, bestStreak = 0, gameLevel = 1;
-let timerInterval = null, timeLeft = 0;
+let timerInterval = null, stopwatchElapsed = 0;
 let roundResults = [];
 let qStartTime = 0;
 
+// Screen history for back button
+const screenHistory = ['char-screen'];
+let currentScreen = 'char-screen';
+
 // ── Screen management ────────────────────────────
-function showScreen(id) {
+function showScreen(id, pushHistory = true) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  if (pushHistory && id !== currentScreen) {
+    screenHistory.push(id);
+  }
+  currentScreen = id;
+  updateNav();
+}
+
+function updateNav() {
+  const nav = document.getElementById('nav-bar');
+  // Hide nav on home screen, show everywhere else
+  if (currentScreen === 'char-screen') {
+    nav.classList.add('hidden');
+  } else {
+    nav.classList.remove('hidden');
+  }
+}
+
+function goBack() {
+  // Stop timer if leaving game
+  if (currentScreen === 'game-screen') clearInterval(timerInterval);
+  if (screenHistory.length > 1) {
+    screenHistory.pop();
+    const prev = screenHistory[screenHistory.length - 1];
+    showScreen(prev, false);
+  }
+}
+
+function goHome() {
+  clearInterval(timerInterval);
+  screenHistory.length = 0;
+  screenHistory.push('char-screen');
+  showScreen('char-screen', false);
 }
 
 // ── Character select ─────────────────────────────
@@ -557,7 +642,7 @@ function renderLevelGrid() {
       <div class="lv-num">Level ${lv.id} · Ages ${lv.age}</div>
       <div class="lv-name">${lv.name}</div>
       <div class="lv-ops">${ops} · Numbers up to ${lv.maxNum}</div>
-      <div class="lv-meta">${lv.count} questions · ${lv.time}s each</div>
+      <div class="lv-meta">${lv.count} questions · ${lv.time}s par time</div>
       <div class="lv-mult">×${lv.multiplier} score multiplier</div>
     `;
     card.onclick = () => startGame(lv.id);
@@ -587,40 +672,30 @@ function showQuestion() {
   document.getElementById('feedback').textContent = '';
   const inp = document.getElementById('ans-input');
   inp.value = ''; inp.className = 'ans-input'; inp.disabled = false;
-  // Numeric keyboard for normal questions, text keyboard for fractions (needs / key)
   inp.inputMode = q.isFraction ? 'text' : 'numeric';
   inp.focus();
   document.getElementById('btn-submit').disabled = false;
   updateStreak();
   qStartTime = performance.now();
-  startTimer(q.time);
+  startStopwatch(q.parTime);
 }
 
-function startTimer(secs) {
+function startStopwatch(parTime) {
   clearInterval(timerInterval);
-  timeLeft = secs; const total = secs;
-  document.getElementById('hud-timer').textContent = Math.ceil(timeLeft);
+  stopwatchElapsed = 0;
   const bar = document.getElementById('timer-bar');
-  bar.style.width = '100%'; bar.classList.remove('warn');
+  bar.style.width = '0%';
+  bar.classList.remove('slow', 'very-slow');
+  document.getElementById('hud-timer').textContent = '0.0';
   timerInterval = setInterval(() => {
-    timeLeft -= 0.1;
-    if (timeLeft <= 0) { timeLeft = 0; clearInterval(timerInterval); timeUp(); }
-    bar.style.width = (timeLeft / total * 100) + '%';
-    if (timeLeft / total < 0.3) bar.classList.add('warn');
-    document.getElementById('hud-timer').textContent = Math.ceil(timeLeft);
+    stopwatchElapsed += 0.1;
+    document.getElementById('hud-timer').textContent = stopwatchElapsed.toFixed(1);
+    const pct = Math.min((stopwatchElapsed / parTime) * 100, 100);
+    bar.style.width = pct + '%';
+    if (stopwatchElapsed > parTime * 2) { bar.classList.add('very-slow'); bar.classList.remove('slow'); }
+    else if (stopwatchElapsed > parTime) { bar.classList.add('slow'); bar.classList.remove('very-slow'); }
+    else { bar.classList.remove('slow', 'very-slow'); }
   }, 100);
-}
-
-function timeUp() {
-  const q = questions[curQ];
-  curStreak = 0; updateStreak();
-  roundResults.push({ correct: false, timeTaken: q.time, timeAllowed: q.time });
-  const fb = document.getElementById('feedback');
-  fb.textContent = `⏰ Time's up! Answer: ${q.answer}`; fb.className = 'feedback no';
-  const inp = document.getElementById('ans-input');
-  inp.className = 'ans-input wrong'; inp.disabled = true;
-  document.getElementById('btn-submit').disabled = true;
-  setTimeout(() => { curQ++; showQuestion(); }, 1800);
 }
 
 function submitAnswer() {
@@ -631,7 +706,7 @@ function submitAnswer() {
   const raw = inp.value.trim();
   if (!raw) { inp.focus(); return; }
 
-  const elapsed = (performance.now() - qStartTime) / 1000;
+  const timeTaken = (performance.now() - qStartTime) / 1000;
   const ok = checkAnswer(raw, q.answer);
 
   if (ok) {
@@ -646,7 +721,7 @@ function submitAnswer() {
     fb.textContent = `Nope — it's ${q.answer}`;
   }
 
-  roundResults.push({ correct: ok, timeTaken: Math.round(elapsed * 10) / 10, timeAllowed: q.time });
+  roundResults.push({ correct: ok, timeTaken: Math.round(timeTaken * 10) / 10, parTime: q.parTime });
   updateStreak();
   inp.disabled = true; document.getElementById('btn-submit').disabled = true;
   setTimeout(() => { curQ++; showQuestion(); }, ok ? 900 : 1800);
@@ -655,10 +730,8 @@ function submitAnswer() {
 function checkAnswer(u, c) {
   const norm = s => s.toLowerCase().replace(/\s+/g, '').replace(/⁄/g, '/');
   if (norm(u) === norm(c)) return true;
-  // Numeric comparison
   const uN = parseFloat(u), cN = parseFloat(c);
   if (!isNaN(uN) && !isNaN(cN) && Math.abs(uN - cN) < 0.001) return true;
-  // Fraction equivalence (e.g. 2/4 = 1/2, or mixed numbers 1 1/2)
   if (u.includes('/') || c.includes('/')) {
     const parseFrac = s => {
       const parts = s.replace(/\s+/g, ' ').trim().split(' ');
@@ -697,6 +770,9 @@ function endGame() {
   else if (pct >= 40)  { emoji='🌙'; title='Good Try!';      sub='Every astronaut needs practice!'; }
   else                 { emoji='💪'; title='Keep Going!';    sub="You've got this — try again!"; }
 
+  const totalTime = roundResults.reduce((s, r) => s + r.timeTaken, 0);
+  const totalTimeFmt = totalTime >= 60 ? `${Math.floor(totalTime/60)}m ${Math.round(totalTime%60)}s` : `${Math.round(totalTime*10)/10}s`;
+
   const card = document.getElementById('results-card');
   card.innerHTML = `
     <div class="res-emoji">${emoji}</div>
@@ -711,13 +787,13 @@ function endGame() {
       <div class="rs"><div class="v orange">×${s.multiplier}</div><div class="l">Multiplier</div></div>
       <div class="rs"><div class="v pink">${bestStreak}</div><div class="l">Best Streak</div></div>
       <div class="rs"><div class="v gold">${pct}%</div><div class="l">Accuracy</div></div>
-      <div class="rs"><div class="v" style="color:var(--ring)">${selectedChar?.emoji||'👾'}</div><div class="l">${selectedChar?.name||'Explorer'}</div></div>
+      <div class="rs"><div class="v" style="color:var(--ring)">${totalTimeFmt}</div><div class="l">Total Time</div></div>
     </div>
     <div class="score-breakdown">
       <h4>How Your Score Works</h4>
       <div class="sb-row"><span>✅ 100 base points per correct answer</span></div>
       <div class="sb-row"><span>⚡ ×${s.multiplier} level difficulty multiplier</span></div>
-      <div class="sb-row"><span>🏎️ Speed bonus — faster answers = more points (up to ×3)</span></div>
+      <div class="sb-row"><span>🏎️ Speed bonus — beat the par time for up to ×3 points</span></div>
       <div class="sb-row"><span>🔥 Streak bonus — +50 per consecutive correct</span></div>
       ${s.perfectBonus ? `<div class="sb-row perfect"><span>🏆 Perfect round bonus</span><span>+${s.perfectBonus}</span></div>` : ''}
     </div>
@@ -756,6 +832,7 @@ document.addEventListener('keydown', e => {
 // ── Initialise ───────────────────────────────────
 renderCharGrid();
 renderLevelGrid();
+updateNav();
 </script>
 </body>
 </html>
