@@ -258,30 +258,160 @@ body::after{
 .confetti-piece{position:absolute;width:10px;height:10px;top:-10px;animation:cfall 3s ease-in forwards}
 @keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
-/* ── Game Background Scenes ─────────────── */
-.game-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:opacity .5s}
+/* ── Game Background: Explorer Rocket Flight ── */
+.game-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .game-bg .gp{position:absolute;border-radius:50%;will-change:transform,opacity}
 
-/* Scene 1: Gentle Stars — slow twinkling dots rising */
-@keyframes s1Rise{0%{transform:translateY(0) scale(1);opacity:.8}50%{opacity:1}100%{transform:translateY(-110vh) scale(.6);opacity:0}}
-/* Scene 2: Moon Dust — particles floating and settling */
-@keyframes s2Float{0%{transform:translate(0,0) scale(1);opacity:.7}25%{transform:translate(15px,-40px) scale(1.2);opacity:1}50%{transform:translate(-10px,-20px) scale(.9);opacity:.8}75%{transform:translate(20px,-60px) scale(1.1);opacity:.6}100%{transform:translate(5px,0) scale(1);opacity:.7}}
-/* Scene 3: Shooting Stars — diagonal streaks */
-@keyframes s3Shoot{0%{transform:translate(0,0) scaleX(1);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translate(-120vw,80vh) scaleX(3);opacity:0}}
-/* Scene 4: Rocket Trails — speed lines downward */
-@keyframes s4Speed{0%{transform:translateY(-20vh) scaleY(1);opacity:0}10%{opacity:.8}90%{opacity:.8}100%{transform:translateY(120vh) scaleY(4);opacity:0}}
-/* Scene 5: Orbiting Planets — circular paths */
-@keyframes s5Orbit{0%{transform:rotate(0deg) translateX(var(--orb-r)) rotate(0deg) scale(var(--orb-s))}100%{transform:rotate(360deg) translateX(var(--orb-r)) rotate(-360deg) scale(var(--orb-s))}}
-/* Scene 6: Asteroid Field — tumbling drift */
-@keyframes s6Tumble{0%{transform:translate(0,0) rotate(0deg);opacity:.7}50%{opacity:.9}100%{transform:translate(var(--drift-x),var(--drift-y)) rotate(720deg);opacity:0}}
-/* Scene 7: Nebula Swirl — large blobs morphing */
-@keyframes s7Morph{0%{transform:translate(0,0) scale(1) rotate(0deg);opacity:.15}33%{transform:translate(30px,-40px) scale(1.3) rotate(120deg);opacity:.25}66%{transform:translate(-20px,30px) scale(.8) rotate(240deg);opacity:.15}100%{transform:translate(0,0) scale(1) rotate(360deg);opacity:.15}}
-/* Scene 8: Galaxy Spiral — rotating particle ring */
-@keyframes s8Spiral{0%{transform:rotate(0deg) translateX(var(--sp-r)) scale(var(--sp-s));opacity:.6}50%{opacity:1}100%{transform:rotate(360deg) translateX(var(--sp-r)) scale(var(--sp-s));opacity:.6}}
-/* Scene 9: Supernova Pulse — expanding rings */
-@keyframes s9Pulse{0%{transform:translate(-50%,-50%) scale(0);opacity:.8;border-width:3px}70%{opacity:.4}100%{transform:translate(-50%,-50%) scale(1);opacity:0;border-width:1px}}
-/* Scene 10: Wormhole — rings zooming outward */
-@keyframes s10Warp{0%{transform:translate(-50%,-50%) scale(0) rotate(0deg);opacity:0}20%{opacity:.7}80%{opacity:.5}100%{transform:translate(-50%,-50%) scale(3) rotate(180deg);opacity:0}}
+/* Explorer + Rocket composite */
+.explorer-ship{
+  position:absolute;z-index:2;display:flex;flex-direction:column;align-items:center;
+  filter:drop-shadow(0 0 12px rgba(255,255,255,.3));
+  will-change:transform;
+}
+.explorer-ship .ex-char{font-size:2.2rem;line-height:1;position:relative;z-index:1}
+.explorer-ship .ex-rocket{font-size:2.6rem;line-height:1;margin-top:-8px}
+.explorer-ship .ex-glow{
+  position:absolute;bottom:-10px;left:50%;width:30px;height:50px;
+  transform:translateX(-50%);border-radius:50%;
+  filter:blur(12px);opacity:.6;will-change:opacity;
+  animation:exGlow 1s ease-in-out infinite alternate;
+}
+@keyframes exGlow{0%{opacity:.4;transform:translateX(-50%) scaleY(.8)}100%{opacity:.8;transform:translateX(-50%) scaleY(1.2)}}
+
+/* Exhaust particles */
+.exhaust{position:absolute;border-radius:50%;will-change:transform,opacity;animation:exhaustFade var(--exDur) ease-out forwards}
+@keyframes exhaustFade{
+  0%{transform:translate(0,0) scale(1);opacity:.8}
+  100%{transform:translate(var(--exDx),var(--exDy)) scale(0);opacity:0}
+}
+
+/* ── Animal movement archetypes ─────────── */
+/* prowl: cat/fox/wolf — low slink, pause, pounce */
+@keyframes prowl{
+  0%{left:5%;top:65%;transform:rotate(5deg) scaleX(1)}
+  12%{left:8%;top:63%;transform:rotate(3deg) scaleX(1)}
+  18%{left:30%;top:55%;transform:rotate(-8deg) scaleX(1)}
+  30%{left:32%;top:53%;transform:rotate(-3deg) scaleX(1)}
+  35%{left:65%;top:40%;transform:rotate(-15deg) scaleX(1)}
+  48%{left:68%;top:38%;transform:rotate(-5deg) scaleX(1)}
+  53%{left:85%;top:55%;transform:rotate(12deg) scaleX(-1)}
+  65%{left:82%;top:57%;transform:rotate(5deg) scaleX(-1)}
+  72%{left:50%;top:68%;transform:rotate(10deg) scaleX(-1)}
+  82%{left:48%;top:66%;transform:rotate(3deg) scaleX(-1)}
+  88%{left:15%;top:60%;transform:rotate(8deg) scaleX(-1)}
+  100%{left:5%;top:65%;transform:rotate(5deg) scaleX(1)}
+}
+/* hop: bunny/frog/monkey — parabolic bouncy arcs */
+@keyframes hop{
+  0%{left:5%;top:72%;transform:rotate(0deg)}
+  8%{left:15%;top:30%;transform:rotate(-20deg)}
+  16%{left:25%;top:72%;transform:rotate(5deg)}
+  24%{left:35%;top:25%;transform:rotate(-25deg)}
+  32%{left:45%;top:72%;transform:rotate(5deg)}
+  40%{left:55%;top:20%;transform:rotate(-20deg)}
+  48%{left:65%;top:72%;transform:rotate(5deg)}
+  56%{left:75%;top:28%;transform:rotate(-22deg)}
+  64%{left:85%;top:72%;transform:rotate(5deg)}
+  72%{left:75%;top:25%;transform:rotate(20deg)}
+  80%{left:55%;top:72%;transform:rotate(-5deg)}
+  88%{left:30%;top:30%;transform:rotate(15deg)}
+  100%{left:5%;top:72%;transform:rotate(0deg)}
+}
+/* swim: dolphin/whale/shark — undulating sine wave */
+@keyframes swim{
+  0%{left:-5%;top:50%;transform:rotate(8deg) scaleX(1)}
+  12%{left:15%;top:35%;transform:rotate(-12deg) scaleX(1)}
+  25%{left:35%;top:55%;transform:rotate(10deg) scaleX(1)}
+  37%{left:55%;top:30%;transform:rotate(-15deg) scaleX(1)}
+  50%{left:80%;top:50%;transform:rotate(5deg) scaleX(1)}
+  55%{left:85%;top:52%;transform:rotate(5deg) scaleX(-1)}
+  67%{left:65%;top:35%;transform:rotate(-10deg) scaleX(-1)}
+  80%{left:35%;top:55%;transform:rotate(12deg) scaleX(-1)}
+  92%{left:10%;top:40%;transform:rotate(-8deg) scaleX(-1)}
+  100%{left:-5%;top:50%;transform:rotate(8deg) scaleX(1)}
+}
+/* soar: eagle/owl/phoenix/dragon — majestic banking circles */
+@keyframes soar{
+  0%{left:50%;top:15%;transform:rotate(-5deg)}
+  15%{left:85%;top:25%;transform:rotate(25deg)}
+  30%{left:80%;top:55%;transform:rotate(15deg)}
+  45%{left:50%;top:70%;transform:rotate(-5deg)}
+  60%{left:15%;top:55%;transform:rotate(-25deg)}
+  75%{left:10%;top:25%;transform:rotate(-15deg)}
+  90%{left:35%;top:12%;transform:rotate(-8deg)}
+  100%{left:50%;top:15%;transform:rotate(-5deg)}
+}
+/* lumber: bear/gorilla/panda — slow heavy sway */
+@keyframes lumber{
+  0%{left:15%;top:60%;transform:rotate(2deg) scale(1)}
+  15%{left:18%;top:55%;transform:rotate(-3deg) scale(1.05)}
+  30%{left:40%;top:50%;transform:rotate(4deg) scale(1)}
+  45%{left:55%;top:55%;transform:rotate(-2deg) scale(1.05)}
+  60%{left:70%;top:48%;transform:rotate(3deg) scale(1)}
+  75%{left:65%;top:58%;transform:rotate(-4deg) scale(1.05)}
+  90%{left:35%;top:62%;transform:rotate(2deg) scale(1)}
+  100%{left:15%;top:60%;transform:rotate(2deg) scale(1)}
+}
+/* dart: dog/hamster/tiger/zebra — fast sharp zigs */
+@keyframes dart{
+  0%{left:5%;top:50%;transform:rotate(0deg)}
+  8%{left:35%;top:20%;transform:rotate(-30deg)}
+  14%{left:36%;top:19%;transform:rotate(-10deg)}
+  22%{left:75%;top:55%;transform:rotate(25deg)}
+  28%{left:76%;top:56%;transform:rotate(8deg)}
+  36%{left:45%;top:15%;transform:rotate(-35deg)}
+  42%{left:44%;top:14%;transform:rotate(-10deg)}
+  50%{left:90%;top:40%;transform:rotate(20deg)}
+  56%{left:89%;top:41%;transform:rotate(5deg)}
+  64%{left:55%;top:70%;transform:rotate(15deg)}
+  72%{left:20%;top:30%;transform:rotate(-25deg)}
+  80%{left:18%;top:28%;transform:rotate(-5deg)}
+  88%{left:45%;top:65%;transform:rotate(20deg)}
+  100%{left:5%;top:50%;transform:rotate(0deg)}
+}
+/* flutter: bee/bat/jellyfish — erratic jittery hovering */
+@keyframes flutter{
+  0%{left:40%;top:40%;transform:rotate(0deg)}
+  5%{left:45%;top:35%;transform:rotate(15deg)}
+  10%{left:38%;top:42%;transform:rotate(-10deg)}
+  15%{left:50%;top:30%;transform:rotate(20deg)}
+  20%{left:55%;top:38%;transform:rotate(-5deg)}
+  25%{left:48%;top:28%;transform:rotate(12deg)}
+  30%{left:60%;top:35%;transform:rotate(-15deg)}
+  40%{left:70%;top:25%;transform:rotate(8deg)}
+  50%{left:65%;top:45%;transform:rotate(-12deg)}
+  60%{left:50%;top:55%;transform:rotate(18deg)}
+  70%{left:35%;top:50%;transform:rotate(-8deg)}
+  80%{left:25%;top:35%;transform:rotate(10deg)}
+  90%{left:32%;top:45%;transform:rotate(-14deg)}
+  100%{left:40%;top:40%;transform:rotate(0deg)}
+}
+/* glide: unicorn/turtle/sloth/elk — smooth graceful long arcs */
+@keyframes glide{
+  0%{left:10%;top:45%;transform:rotate(3deg)}
+  20%{left:35%;top:25%;transform:rotate(-8deg)}
+  40%{left:65%;top:35%;transform:rotate(5deg)}
+  60%{left:80%;top:55%;transform:rotate(10deg)}
+  80%{left:45%;top:65%;transform:rotate(-5deg)}
+  100%{left:10%;top:45%;transform:rotate(3deg)}
+}
+
+/* Ambient themed emoji particles */
+.ambient-emoji{
+  position:absolute;font-size:1.2rem;opacity:0;will-change:transform,opacity;
+  animation:ambFloat var(--amb-dur,8s) ease-in-out var(--amb-del,0s) infinite;
+  pointer-events:none;
+}
+@keyframes ambFloat{
+  0%{opacity:0;transform:translate(0,0) rotate(0deg) scale(.5)}
+  15%{opacity:.7;transform:translate(var(--amb-dx1),var(--amb-dy1)) rotate(60deg) scale(.9)}
+  50%{opacity:.5;transform:translate(var(--amb-dx2),var(--amb-dy2)) rotate(180deg) scale(1)}
+  85%{opacity:.7;transform:translate(var(--amb-dx3),var(--amb-dy3)) rotate(300deg) scale(.8)}
+  100%{opacity:0;transform:translate(0,0) rotate(360deg) scale(.5)}
+}
+
+/* Palette twinkling stars */
+@keyframes starPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
 
 /* ── Responsive ─────────────────────────── */
 @media(max-width:600px){
@@ -295,7 +425,42 @@ body::after{
   .quasar-wrap{width:100px;height:100px}
   .quasar-core{width:24px;height:24px}
   .quasar-jet{width:130px;height:5px}
+  .explorer-ship .ex-char{font-size:1.6rem}
+  .explorer-ship .ex-rocket{font-size:2rem;margin-top:-6px}
 }
+
+/* ── Mobile keyboard-up: only show question + input ── */
+body.kb-up{overflow:hidden}
+body.kb-up .nav-bar{display:none!important}
+body.kb-up .dedication{display:none!important}
+body.kb-up .game-bg{opacity:.25}
+body.kb-up #game-screen{
+  position:fixed!important;top:0;left:0;right:0;
+  height:var(--vvh,100vh);
+  min-height:auto;padding:4px 10px 2px;gap:0;
+  justify-content:flex-end;overflow-y:auto;
+}
+body.kb-up .game-hud{
+  gap:3px;margin-bottom:2px;
+}
+body.kb-up .hud-item{
+  padding:2px 6px;font-size:.65rem;border-radius:8px;
+}
+body.kb-up .timer-wrap{height:4px;margin-bottom:2px}
+body.kb-up .q-card{
+  padding:10px 12px;gap:8px;min-height:auto;border-radius:14px;
+  flex-shrink:1;
+}
+body.kb-up .q-text{font-size:clamp(3.0rem,10vw,3.4rem);line-height:1.3}
+body.kb-up .q-text .frac{font-size:.7em}
+body.kb-up .ans-row{gap:8px}
+body.kb-up .ans-input{
+  padding:8px 12px;font-size:1.15rem;width:120px;border-radius:10px;
+}
+body.kb-up .btn-go-q{padding:8px 16px;font-size:.9rem;border-radius:10px}
+body.kb-up .feedback{font-size:.75rem;min-height:.9em}
+body.kb-up .streak-line{display:none}
+body.kb-up .explorer-ship{opacity:.3!important}
 .fade-in{animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
@@ -678,261 +843,214 @@ function renderLevelGrid() {
 }
 
 // ── Character Colour Palettes ────────────────────
-// Each character gets 3 colours: primary, secondary, accent
 const PALETTES = {
-  'astro-cat':       ['#ff6b35','#ff9a3c','#ffd166'],
-  'cosmic-fox':      ['#ff4500','#ff7043','#ffab40'],
-  'star-wolf':       ['#546e7a','#90a4ae','#b0bec5'],
-  'nebula-bear':     ['#8d6e63','#bcaaa4','#d7ccc8'],
-  'rocket-bunny':    ['#f48fb1','#f8bbd0','#fce4ec'],
-  'lunar-panda':     ['#e0e0e0','#bdbdbd','#9575cd'],
-  'galaxy-lion':     ['#ffa000','#ffc107','#ffe082'],
-  'comet-tiger':     ['#ff6f00','#ff8f00','#ffca28'],
-  'orbit-owl':       ['#5c6bc0','#7986cb','#c5cae9'],
-  'solar-eagle':     ['#f9a825','#fdd835','#fff9c4'],
-  'meteor-monkey':   ['#d84315','#ff5722','#ff8a65'],
-  'void-dragon':     ['#6a1b9a','#ab47bc','#e040fb'],
-  'plasma-penguin':  ['#0277bd','#039be5','#4fc3f7'],
-  'quasar-koala':    ['#607d8b','#90a4ae','#cfd8dc'],
-  'pulsar-dolphin':  ['#0097a7','#00bcd4','#80deea'],
-  'warp-whale':      ['#01579b','#0288d1','#4dd0e1'],
-  'nova-unicorn':    ['#e91e63','#f06292','#f8bbd0'],
-  'turbo-turtle':    ['#2e7d32','#4caf50','#a5d6a7'],
-  'blaze-bee':       ['#f9a825','#ffeb3b','#fff176'],
-  'flare-frog':      ['#1b5e20','#43a047','#81c784'],
-  'zenith-zebra':    ['#212121','#eeeeee','#9e9e9e'],
-  'dark-bat':        ['#311b92','#512da8','#9575cd'],
-  'hyper-hamster':   ['#ff8a80','#ff5252','#ffcdd2'],
-  'gravity-gorilla': ['#4e342e','#795548','#a1887f'],
-  'spark-shark':     ['#263238','#455a64','#00bfa5'],
-  'thunder-rex':     ['#bf360c','#e64a19','#ff8a65'],
-  'photon-phoenix':  ['#dd2c00','#ff3d00','#ff9e80'],
-  'astro-alien':     ['#76ff03','#b2ff59','#ccff90'],
-  'robo-ranger':     ['#00e676','#69f0ae','#b9f6ca'],
-  'captain-croc':    ['#558b2f','#7cb342','#aed581'],
-  'eclipse-elk':     ['#3e2723','#6d4c41','#d7ccc8'],
-  'dash-dog':        ['#ff6e40','#ff9e80','#ffd180'],
-  'space-kitten':    ['#f48fb1','#ce93d8','#b39ddb'],
-  'star-sloth':      ['#a1887f','#bcaaa4','#d7ccc8'],
-  'jet-jellyfish':   ['#00b8d4','#00e5ff','#84ffff'],
-  'astro-octopus':   ['#e040fb','#ea80fc','#b388ff'],
+  'astro-cat':['#ff6b35','#ff9a3c','#ffd166'],'cosmic-fox':['#ff4500','#ff7043','#ffab40'],
+  'star-wolf':['#546e7a','#90a4ae','#b0bec5'],'nebula-bear':['#8d6e63','#bcaaa4','#d7ccc8'],
+  'rocket-bunny':['#f48fb1','#f8bbd0','#fce4ec'],'lunar-panda':['#e0e0e0','#bdbdbd','#9575cd'],
+  'galaxy-lion':['#ffa000','#ffc107','#ffe082'],'comet-tiger':['#ff6f00','#ff8f00','#ffca28'],
+  'orbit-owl':['#5c6bc0','#7986cb','#c5cae9'],'solar-eagle':['#f9a825','#fdd835','#fff9c4'],
+  'meteor-monkey':['#d84315','#ff5722','#ff8a65'],'void-dragon':['#6a1b9a','#ab47bc','#e040fb'],
+  'plasma-penguin':['#0277bd','#039be5','#4fc3f7'],'quasar-koala':['#607d8b','#90a4ae','#cfd8dc'],
+  'pulsar-dolphin':['#0097a7','#00bcd4','#80deea'],'warp-whale':['#01579b','#0288d1','#4dd0e1'],
+  'nova-unicorn':['#e91e63','#f06292','#f8bbd0'],'turbo-turtle':['#2e7d32','#4caf50','#a5d6a7'],
+  'blaze-bee':['#f9a825','#ffeb3b','#fff176'],'flare-frog':['#1b5e20','#43a047','#81c784'],
+  'zenith-zebra':['#212121','#eeeeee','#9e9e9e'],'dark-bat':['#311b92','#512da8','#9575cd'],
+  'hyper-hamster':['#ff8a80','#ff5252','#ffcdd2'],'gravity-gorilla':['#4e342e','#795548','#a1887f'],
+  'spark-shark':['#263238','#455a64','#00bfa5'],'thunder-rex':['#bf360c','#e64a19','#ff8a65'],
+  'photon-phoenix':['#dd2c00','#ff3d00','#ff9e80'],'astro-alien':['#76ff03','#b2ff59','#ccff90'],
+  'robo-ranger':['#00e676','#69f0ae','#b9f6ca'],'captain-croc':['#558b2f','#7cb342','#aed581'],
+  'eclipse-elk':['#3e2723','#6d4c41','#d7ccc8'],'dash-dog':['#ff6e40','#ff9e80','#ffd180'],
+  'space-kitten':['#f48fb1','#ce93d8','#b39ddb'],'star-sloth':['#a1887f','#bcaaa4','#d7ccc8'],
+  'jet-jellyfish':['#00b8d4','#00e5ff','#84ffff'],'astro-octopus':['#e040fb','#ea80fc','#b388ff'],
 };
 
-// ── Scene Generators (one per level) ─────────────
-// Each returns an array of DOM elements with inline styles + animations
-// All use --c1, --c2, --c3 custom properties from the character palette
+// ── Character Behaviour Profiles ─────────────────
+// move: CSS animation name | speed: seconds per loop | trail/ambient: themed emojis
+const CHAR_BEHAVIORS = {
+  'astro-cat':       {move:'prowl',   speed:18, trail:['🐾','✨'],      ambient:['🐾','🧶','⭐','✨']},
+  'cosmic-fox':      {move:'prowl',   speed:15, trail:['🐾','💫'],      ambient:['🐾','🍂','⭐','✨']},
+  'star-wolf':       {move:'prowl',   speed:14, trail:['🐾','🌙'],      ambient:['🐾','🌙','🪨','⭐']},
+  'nebula-bear':     {move:'lumber',  speed:22, trail:['🐾','⭐'],      ambient:['🐾','🍯','🌲','⭐']},
+  'rocket-bunny':    {move:'hop',     speed:13, trail:['✨','🥕'],      ambient:['🥕','🌸','⭐','✨']},
+  'lunar-panda':     {move:'lumber',  speed:20, trail:['🎋','✨'],      ambient:['🎋','🎍','🌙','⭐']},
+  'galaxy-lion':     {move:'prowl',   speed:15, trail:['👑','✨'],      ambient:['👑','🐾','☀️','⭐']},
+  'comet-tiger':     {move:'dart',    speed:11, trail:['🔥','💫'],      ambient:['🔥','🐾','💫','⭐']},
+  'orbit-owl':       {move:'soar',    speed:18, trail:['🪶','✨'],      ambient:['🪶','📖','🌙','⭐']},
+  'solar-eagle':     {move:'soar',    speed:14, trail:['🪶','☀️'],      ambient:['🪶','☀️','🏔️','⭐']},
+  'meteor-monkey':   {move:'hop',     speed:11, trail:['🍌','✨'],      ambient:['🍌','🍃','💫','⭐']},
+  'void-dragon':     {move:'soar',    speed:13, trail:['🔥','💜'],      ambient:['🔥','💎','💜','⭐']},
+  'plasma-penguin':  {move:'swim',    speed:16, trail:['❄️','💧'],      ambient:['❄️','🧊','🐟','⭐']},
+  'quasar-koala':    {move:'lumber',  speed:22, trail:['🍃','💤'],      ambient:['🍃','🌿','💤','⭐']},
+  'pulsar-dolphin':  {move:'swim',    speed:13, trail:['💧','✨'],      ambient:['💧','🐟','🌊','⭐']},
+  'warp-whale':      {move:'swim',    speed:20, trail:['💧','🌊'],      ambient:['🌊','💧','🐟','⭐']},
+  'nova-unicorn':    {move:'glide',   speed:16, trail:['🌈','✨'],      ambient:['🌈','✨','💖','⭐']},
+  'turbo-turtle':    {move:'glide',   speed:24, trail:['🍃','✨'],      ambient:['🍃','🐚','💧','⭐']},
+  'blaze-bee':       {move:'flutter', speed:10, trail:['🍯','✨'],      ambient:['🌸','🌻','🍯','⭐']},
+  'flare-frog':      {move:'hop',     speed:11, trail:['💧','✨'],      ambient:['🪷','💧','🪲','⭐']},
+  'zenith-zebra':    {move:'dart',    speed:12, trail:['⚡','✨'],      ambient:['⚡','🌾','💨','⭐']},
+  'dark-bat':        {move:'flutter', speed:12, trail:['🌙','💜'],      ambient:['🌙','🦟','🌑','⭐']},
+  'hyper-hamster':   {move:'dart',    speed:9,  trail:['🌻','✨'],      ambient:['🌻','🌰','💨','⭐']},
+  'gravity-gorilla': {move:'lumber',  speed:20, trail:['🍌','💪'],      ambient:['🍌','🪨','🌿','⭐']},
+  'spark-shark':     {move:'swim',    speed:11, trail:['💧','⚡'],      ambient:['🌊','🐟','⚡','⭐']},
+  'thunder-rex':     {move:'lumber',  speed:15, trail:['🔥','💥'],      ambient:['🔥','🦴','💥','⭐']},
+  'photon-phoenix':  {move:'soar',    speed:13, trail:['🔥','✨'],      ambient:['🔥','✨','🌅','⭐']},
+  'astro-alien':     {move:'flutter', speed:13, trail:['💚','✨'],      ambient:['👽','🛸','💚','⭐']},
+  'robo-ranger':     {move:'dart',    speed:11, trail:['⚡','⚙️'],      ambient:['⚙️','🔩','⚡','⭐']},
+  'captain-croc':    {move:'swim',    speed:15, trail:['💧','🐾'],      ambient:['💧','🐾','🪵','⭐']},
+  'eclipse-elk':     {move:'glide',   speed:18, trail:['🍂','✨'],      ambient:['🍂','🌲','🌙','⭐']},
+  'dash-dog':        {move:'dart',    speed:9,  trail:['🐾','💫'],      ambient:['🐾','🦴','💨','⭐']},
+  'space-kitten':    {move:'prowl',   speed:16, trail:['🐾','💖'],      ambient:['🐾','🧶','💖','⭐']},
+  'star-sloth':      {move:'glide',   speed:28, trail:['🍃','💤'],      ambient:['🍃','💤','🌿','⭐']},
+  'jet-jellyfish':   {move:'flutter', speed:16, trail:['💧','✨'],      ambient:['🫧','💧','🪸','⭐']},
+  'astro-octopus':   {move:'swim',    speed:15, trail:['💧','💜'],      ambient:['🫧','💜','🐚','⭐']},
+};
+const DEFAULT_BEHAVIOR = {move:'glide', speed:16, trail:['✨','💫'], ambient:['⭐','✨','💫','🌟']};
+
+// ── Explorer Rocket Scene Builder ────────────────
+let exhaustInterval = null;
 
 function buildScene(level, palette) {
   const [c1, c2, c3] = palette;
   const bg = document.getElementById('game-bg');
   bg.innerHTML = '';
-  bg.style.setProperty('--c1', c1);
-  bg.style.setProperty('--c2', c2);
-  bg.style.setProperty('--c3', c3);
+  const beh = CHAR_BEHAVIORS[selectedChar?.id] || DEFAULT_BEHAVIOR;
 
-  const builders = [buildScene1, buildScene2, buildScene3, buildScene4, buildScene5,
-                    buildScene6, buildScene7, buildScene8, buildScene9, buildScene10];
-  builders[level - 1](bg, c1, c2, c3);
-}
-
-// 1. Gentle Stars — soft dots rising slowly
-function buildScene1(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  for (let i = 0; i < 30; i++) {
-    const p = mk(bg);
-    const s = 2 + Math.random() * 5;
-    Object.assign(p.style, {
-      width: s+'px', height: s+'px', left: Math.random()*100+'%', top: (80+Math.random()*30)+'%',
-      background: cols[i%3], boxShadow: `0 0 ${s*2}px ${cols[i%3]}`,
-      animation: `s1Rise ${8+Math.random()*12}s linear ${Math.random()*8}s infinite`,
-      opacity: 0.6+Math.random()*0.4
+  // Ambient stars in palette colours
+  for (let i = 0; i < 14; i++) {
+    const star = document.createElement('div');
+    star.className = 'gp';
+    const s = 2 + Math.random() * 4;
+    const col = [c1, c2, c3][i % 3];
+    Object.assign(star.style, {
+      width: s+'px', height: s+'px',
+      left: Math.random()*100+'%', top: Math.random()*100+'%',
+      background: col, boxShadow: `0 0 ${s*2}px ${col}`,
+      animation: `starPulse ${2+Math.random()*3}s ease-in-out ${Math.random()*2}s infinite`,
     });
+    bg.appendChild(star);
   }
-}
 
-// 2. Moon Dust — floating particles gently drifting
-function buildScene2(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  for (let i = 0; i < 25; i++) {
-    const p = mk(bg);
-    const s = 3 + Math.random() * 8;
-    Object.assign(p.style, {
-      width: s+'px', height: s+'px', left: Math.random()*100+'%', top: Math.random()*100+'%',
-      background: cols[i%3], borderRadius: '50%',
-      boxShadow: `0 0 ${s}px ${cols[i%3]}40`,
-      animation: `s2Float ${4+Math.random()*6}s ease-in-out ${Math.random()*4}s infinite`,
-    });
-  }
-}
-
-// 3. Shooting Stars — diagonal streaks
-function buildScene3(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  for (let i = 0; i < 12; i++) {
-    const p = mk(bg);
-    const w = 40 + Math.random() * 80;
-    Object.assign(p.style, {
-      width: w+'px', height: '2px', left: (80+Math.random()*40)+'%', top: Math.random()*60+'%',
-      background: `linear-gradient(90deg, ${cols[i%3]}, transparent)`,
-      borderRadius: '2px', transform: 'rotate(-35deg)',
-      animation: `s3Shoot ${1.5+Math.random()*2.5}s linear ${Math.random()*6}s infinite`,
-    });
-  }
-}
-
-// 4. Rocket Trails — vertical speed lines rushing down
-function buildScene4(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  for (let i = 0; i < 20; i++) {
-    const p = mk(bg);
-    const h = 30 + Math.random() * 80;
-    Object.assign(p.style, {
-      width: '2px', height: h+'px', left: Math.random()*100+'%', top: '-10%',
-      background: `linear-gradient(180deg, ${cols[i%3]}, transparent)`,
-      borderRadius: '2px',
-      animation: `s4Speed ${0.8+Math.random()*1.2}s linear ${Math.random()*3}s infinite`,
-    });
-  }
-}
-
-// 5. Orbiting Planets — circles on orbital paths
-function buildScene5(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
+  // Themed ambient emoji particles (character-specific)
   for (let i = 0; i < 10; i++) {
-    const p = mk(bg);
-    const s = 8 + Math.random() * 20;
-    const r = 60 + Math.random() * 180;
-    p.style.cssText = `
-      position:absolute;width:${s}px;height:${s}px;border-radius:50%;
-      left:50%;top:50%;margin-left:${-s/2}px;margin-top:${-s/2}px;
-      background:radial-gradient(circle at 35% 35%,${cols[i%3]},${cols[(i+1)%3]}80);
-      box-shadow:0 0 ${s}px ${cols[i%3]}50;
-      --orb-r:${r}px;--orb-s:${0.6+Math.random()*0.6};
-      animation:s5Orbit ${6+Math.random()*10}s linear ${Math.random()*4}s infinite;
+    const em = document.createElement('div');
+    em.className = 'ambient-emoji';
+    em.textContent = beh.ambient[i % beh.ambient.length];
+    const dur = 6 + Math.random() * 8;
+    em.style.cssText = `
+      left:${Math.random()*90}%;top:${Math.random()*90}%;
+      font-size:${0.8+Math.random()*0.8}rem;
+      --amb-dur:${dur}s;--amb-del:${Math.random()*dur}s;
+      --amb-dx1:${-30+Math.random()*60}px;--amb-dy1:${-30+Math.random()*60}px;
+      --amb-dx2:${-50+Math.random()*100}px;--amb-dy2:${-50+Math.random()*100}px;
+      --amb-dx3:${-30+Math.random()*60}px;--amb-dy3:${-30+Math.random()*60}px;
     `;
+    bg.appendChild(em);
   }
-}
 
-// 6. Asteroid Field — tumbling polygonal shapes
-function buildScene6(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  for (let i = 0; i < 18; i++) {
-    const p = mk(bg);
-    const s = 6 + Math.random() * 18;
-    const dx = (-150 + Math.random()*300);
-    const dy = (-150 + Math.random()*300);
-    p.style.cssText = `
-      position:absolute;width:${s}px;height:${s}px;
-      left:${Math.random()*100}%;top:${Math.random()*100}%;
-      background:${cols[i%3]};border-radius:${Math.random()>.5?'30%':'4px'};
-      box-shadow:0 0 ${s/2}px ${cols[i%3]}40;
-      --drift-x:${dx}px;--drift-y:${dy}px;
-      animation:s6Tumble ${5+Math.random()*8}s linear ${Math.random()*5}s infinite;
-    `;
-  }
-}
+  // Explorer ship (character on rocket)
+  const ship = document.createElement('div');
+  ship.className = 'explorer-ship';
+  ship.id = 'explorer-ship';
 
-// 7. Nebula Swirl — large translucent blobs morphing
-function buildScene7(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  for (let i = 0; i < 6; i++) {
-    const p = mk(bg);
-    const s = 150 + Math.random() * 250;
-    p.style.cssText = `
-      position:absolute;width:${s}px;height:${s}px;border-radius:50%;
-      left:${Math.random()*80}%;top:${Math.random()*80}%;
-      background:radial-gradient(circle,${cols[i%3]}40,${cols[(i+1)%3]}20,transparent 70%);
-      filter:blur(${30+Math.random()*40}px);
-      animation:s7Morph ${10+Math.random()*10}s ease-in-out ${Math.random()*5}s infinite;
-    `;
-  }
-}
+  const charSpan = document.createElement('span');
+  charSpan.className = 'ex-char';
+  charSpan.textContent = selectedChar?.emoji || '👾';
 
-// 8. Galaxy Spiral — particles rotating in spiral arms
-function buildScene8(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  // Central glow
-  const center = mk(bg);
-  center.style.cssText = `
-    position:absolute;left:50%;top:50%;width:60px;height:60px;border-radius:50%;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle,${c1}80,${c2}40,transparent 70%);
-    filter:blur(15px);
-  `;
-  for (let i = 0; i < 24; i++) {
-    const p = mk(bg);
-    const s = 3 + Math.random() * 6;
-    const r = 30 + i * 8 + Math.random()*30;
-    p.style.cssText = `
-      position:absolute;width:${s}px;height:${s}px;border-radius:50%;
-      left:50%;top:50%;margin-left:${-s/2}px;margin-top:${-s/2}px;
-      background:${cols[i%3]};box-shadow:0 0 ${s*2}px ${cols[i%3]};
-      --sp-r:${r}px;--sp-s:${0.5+Math.random()*0.8};
-      animation:s8Spiral ${4+i*0.3}s linear ${Math.random()*2}s infinite;
-    `;
-  }
-}
+  const rocketSpan = document.createElement('span');
+  rocketSpan.className = 'ex-rocket';
+  rocketSpan.textContent = '🚀';
 
-// 9. Supernova Pulse — expanding rings from center
-function buildScene9(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  // Core flash
-  const core = mk(bg);
-  core.style.cssText = `
-    position:absolute;left:50%;top:50%;width:30px;height:30px;border-radius:50%;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle,#fff,${c1},transparent);
-    box-shadow:0 0 40px ${c1},0 0 80px ${c2};
-    animation:twinkle 2s ease-in-out infinite alternate;
-  `;
-  for (let i = 0; i < 8; i++) {
-    const p = mk(bg);
-    const maxSize = 300 + Math.random()*200;
-    p.style.cssText = `
-      position:absolute;left:50%;top:50%;width:${maxSize}px;height:${maxSize}px;
-      border-radius:50%;background:transparent;
-      border:3px solid ${cols[i%3]};
-      box-shadow:0 0 15px ${cols[i%3]}60,inset 0 0 15px ${cols[i%3]}30;
-      animation:s9Pulse ${3+Math.random()*2}s ease-out ${i*0.5}s infinite;
-    `;
-  }
-}
+  const glow = document.createElement('div');
+  glow.className = 'ex-glow';
+  glow.style.background = `radial-gradient(circle, ${c1}, ${c2}80, transparent)`;
 
-// 10. Wormhole — concentric rings zooming outward with rotation
-function buildScene10(bg, c1, c2, c3) {
-  const cols = [c1, c2, c3];
-  // Deep core
-  const core = mk(bg);
-  core.style.cssText = `
-    position:absolute;left:50%;top:50%;width:20px;height:20px;border-radius:50%;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle,#fff,${c1}80,transparent);
-    box-shadow:0 0 30px ${c1},0 0 60px ${c2}80;
-  `;
-  for (let i = 0; i < 12; i++) {
-    const p = mk(bg);
-    const maxSize = 200 + Math.random()*300;
-    p.style.cssText = `
-      position:absolute;left:50%;top:50%;width:${maxSize}px;height:${maxSize}px;
-      border-radius:50%;background:transparent;
-      border:2px solid ${cols[i%3]}90;
-      box-shadow:0 0 10px ${cols[i%3]}40;
-      animation:s10Warp ${2+Math.random()*3}s linear ${i*0.35}s infinite;
-    `;
-  }
-}
+  ship.appendChild(charSpan);
+  ship.appendChild(rocketSpan);
+  ship.appendChild(glow);
 
-function mk(parent) {
-  const d = document.createElement('div');
-  d.className = 'gp';
-  parent.appendChild(d);
-  return d;
+  // Animate with the character's movement archetype
+  ship.style.animation = `${beh.move} ${beh.speed}s ease-in-out infinite`;
+
+  bg.appendChild(ship);
+
+  // Exhaust trail with themed emoji particles
+  clearInterval(exhaustInterval);
+  exhaustInterval = setInterval(() => {
+    const s = bg.querySelector('#explorer-ship');
+    if (!s) return;
+    const rect = s.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.bottom - 8;
+
+    // Coloured particle
+    const p = document.createElement('div');
+    p.className = 'exhaust';
+    const size = 3 + Math.random() * 5;
+    const col = [c1, c2, c3][~~(Math.random() * 3)];
+    Object.assign(p.style, {
+      width: size+'px', height: size+'px',
+      left: (cx - size/2)+'px', top: (cy - size/2)+'px',
+      background: col, boxShadow: `0 0 ${size}px ${col}`,
+      '--exDx': (-15+Math.random()*30)+'px',
+      '--exDy': (15+Math.random()*35)+'px',
+      '--exDur': (0.5+Math.random()*0.7)+'s',
+    });
+    bg.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+
+    // Themed emoji trail (every 3rd tick)
+    if (Math.random() < 0.35) {
+      const te = document.createElement('div');
+      te.className = 'exhaust';
+      te.textContent = beh.trail[~~(Math.random() * beh.trail.length)];
+      te.style.cssText = `
+        position:absolute;font-size:.9rem;border-radius:0;background:none;box-shadow:none;
+        left:${cx-6}px;top:${cy}px;
+        --exDx:${-20+Math.random()*40}px;
+        --exDy:${20+Math.random()*40}px;
+        --exDur:${0.8+Math.random()*0.6}s;
+      `;
+      bg.appendChild(te);
+      setTimeout(() => te.remove(), 1500);
+    }
+  }, 100);
 }
 
 function clearGameBg() {
+  clearInterval(exhaustInterval);
   const bg = document.getElementById('game-bg');
   if (bg) bg.innerHTML = '';
 }
+
+// ── Mobile keyboard detection (robust) ───────────
+(function initKeyboardDetection() {
+  if (!window.visualViewport) return;
+  const vv = window.visualViewport;
+  // Capture initial height on first load (before any keyboard)
+  let fullH = vv.height;
+
+  function onResize() {
+    const h = vv.height;
+    // Update --vvh so the game screen sizes to exactly the visible area
+    document.documentElement.style.setProperty('--vvh', h + 'px');
+    if (h < fullH * 0.72) {
+      document.body.classList.add('kb-up');
+      // Scroll to bottom so question + input are fully visible
+      requestAnimationFrame(() => {
+        const gs = document.getElementById('game-screen');
+        if (gs) gs.scrollTop = gs.scrollHeight;
+      });
+    } else {
+      document.body.classList.remove('kb-up');
+      fullH = Math.max(fullH, h); // reset baseline when keyboard closes
+    }
+  }
+  vv.addEventListener('resize', onResize);
+  // Also listen for orientation change to reset baseline
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => { fullH = vv.height; onResize(); }, 300);
+  });
+})();
 
 // ── Game ─────────────────────────────────────────
 function startGame(level) {
@@ -1121,6 +1239,15 @@ document.addEventListener('keydown', e => {
 renderCharGrid();
 renderLevelGrid();
 updateNav();
+
+// Ensure input stays visible on mobile keyboard open
+document.getElementById('ans-input').addEventListener('focus', () => {
+  if (!window.visualViewport) return;
+  setTimeout(() => {
+    const gs = document.getElementById('game-screen');
+    if (gs) gs.scrollTop = gs.scrollHeight;
+  }, 300);
+});
 </script>
 </body>
 </html>
