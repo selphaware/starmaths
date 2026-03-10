@@ -286,118 +286,114 @@ body::after{
 }
 
 /* ── Animal movement archetypes ─────────── */
-/* All paths orbit the periphery, avoiding the central question card area */
 /* prowl: cat/fox/wolf — low slink, pause, pounce */
 @keyframes prowl{
-  0%{left:3%;top:78%;transform:rotate(5deg) scaleX(1)}
-  10%{left:6%;top:76%;transform:rotate(3deg) scaleX(1)}
-  18%{left:3%;top:30%;transform:rotate(-8deg) scaleX(1)}
-  25%{left:5%;top:15%;transform:rotate(-3deg) scaleX(1)}
-  35%{left:40%;top:5%;transform:rotate(-15deg) scaleX(1)}
-  45%{left:85%;top:8%;transform:rotate(-5deg) scaleX(1)}
-  53%{left:90%;top:35%;transform:rotate(12deg) scaleX(-1)}
-  63%{left:88%;top:70%;transform:rotate(5deg) scaleX(-1)}
-  72%{left:85%;top:82%;transform:rotate(10deg) scaleX(-1)}
-  82%{left:50%;top:85%;transform:rotate(3deg) scaleX(-1)}
-  90%{left:15%;top:82%;transform:rotate(8deg) scaleX(-1)}
-  100%{left:3%;top:78%;transform:rotate(5deg) scaleX(1)}
+  0%{left:5%;top:65%;transform:rotate(5deg) scaleX(1)}
+  12%{left:8%;top:63%;transform:rotate(3deg) scaleX(1)}
+  18%{left:30%;top:55%;transform:rotate(-8deg) scaleX(1)}
+  30%{left:32%;top:53%;transform:rotate(-3deg) scaleX(1)}
+  35%{left:65%;top:40%;transform:rotate(-15deg) scaleX(1)}
+  48%{left:68%;top:38%;transform:rotate(-5deg) scaleX(1)}
+  53%{left:85%;top:55%;transform:rotate(12deg) scaleX(-1)}
+  65%{left:82%;top:57%;transform:rotate(5deg) scaleX(-1)}
+  72%{left:50%;top:68%;transform:rotate(10deg) scaleX(-1)}
+  82%{left:48%;top:66%;transform:rotate(3deg) scaleX(-1)}
+  88%{left:15%;top:60%;transform:rotate(8deg) scaleX(-1)}
+  100%{left:5%;top:65%;transform:rotate(5deg) scaleX(1)}
 }
 /* hop: bunny/frog/monkey — parabolic bouncy arcs */
 @keyframes hop{
-  0%{left:3%;top:85%;transform:rotate(0deg)}
-  8%{left:5%;top:18%;transform:rotate(-20deg)}
-  16%{left:10%;top:85%;transform:rotate(5deg)}
-  24%{left:35%;top:5%;transform:rotate(-25deg)}
-  32%{left:60%;top:5%;transform:rotate(5deg)}
-  40%{left:88%;top:15%;transform:rotate(-20deg)}
-  48%{left:90%;top:85%;transform:rotate(5deg)}
-  56%{left:88%;top:18%;transform:rotate(-22deg)}
-  64%{left:85%;top:85%;transform:rotate(5deg)}
-  72%{left:55%;top:88%;transform:rotate(20deg)}
-  80%{left:25%;top:88%;transform:rotate(-5deg)}
-  88%{left:5%;top:25%;transform:rotate(15deg)}
-  100%{left:3%;top:85%;transform:rotate(0deg)}
+  0%{left:5%;top:72%;transform:rotate(0deg)}
+  8%{left:15%;top:30%;transform:rotate(-20deg)}
+  16%{left:25%;top:72%;transform:rotate(5deg)}
+  24%{left:35%;top:25%;transform:rotate(-25deg)}
+  32%{left:45%;top:72%;transform:rotate(5deg)}
+  40%{left:55%;top:20%;transform:rotate(-20deg)}
+  48%{left:65%;top:72%;transform:rotate(5deg)}
+  56%{left:75%;top:28%;transform:rotate(-22deg)}
+  64%{left:85%;top:72%;transform:rotate(5deg)}
+  72%{left:75%;top:25%;transform:rotate(20deg)}
+  80%{left:55%;top:72%;transform:rotate(-5deg)}
+  88%{left:30%;top:30%;transform:rotate(15deg)}
+  100%{left:5%;top:72%;transform:rotate(0deg)}
 }
 /* swim: dolphin/whale/shark — undulating sine wave */
 @keyframes swim{
-  0%{left:-5%;top:80%;transform:rotate(8deg) scaleX(1)}
-  12%{left:5%;top:15%;transform:rotate(-12deg) scaleX(1)}
-  25%{left:30%;top:5%;transform:rotate(10deg) scaleX(1)}
-  37%{left:70%;top:8%;transform:rotate(-15deg) scaleX(1)}
-  50%{left:92%;top:20%;transform:rotate(5deg) scaleX(1)}
-  55%{left:90%;top:80%;transform:rotate(5deg) scaleX(-1)}
-  67%{left:70%;top:88%;transform:rotate(-10deg) scaleX(-1)}
-  80%{left:30%;top:85%;transform:rotate(12deg) scaleX(-1)}
-  92%{left:5%;top:78%;transform:rotate(-8deg) scaleX(-1)}
-  100%{left:-5%;top:80%;transform:rotate(8deg) scaleX(1)}
+  0%{left:-5%;top:50%;transform:rotate(8deg) scaleX(1)}
+  12%{left:15%;top:35%;transform:rotate(-12deg) scaleX(1)}
+  25%{left:35%;top:55%;transform:rotate(10deg) scaleX(1)}
+  37%{left:55%;top:30%;transform:rotate(-15deg) scaleX(1)}
+  50%{left:80%;top:50%;transform:rotate(5deg) scaleX(1)}
+  55%{left:85%;top:52%;transform:rotate(5deg) scaleX(-1)}
+  67%{left:65%;top:35%;transform:rotate(-10deg) scaleX(-1)}
+  80%{left:35%;top:55%;transform:rotate(12deg) scaleX(-1)}
+  92%{left:10%;top:40%;transform:rotate(-8deg) scaleX(-1)}
+  100%{left:-5%;top:50%;transform:rotate(8deg) scaleX(1)}
 }
 /* soar: eagle/owl/phoenix/dragon — majestic banking circles */
 @keyframes soar{
-  0%{left:40%;top:4%;transform:rotate(-5deg)}
-  15%{left:88%;top:12%;transform:rotate(25deg)}
-  30%{left:92%;top:60%;transform:rotate(15deg)}
-  45%{left:85%;top:85%;transform:rotate(-5deg)}
-  60%{left:15%;top:85%;transform:rotate(-25deg)}
-  75%{left:3%;top:50%;transform:rotate(-15deg)}
-  90%{left:8%;top:10%;transform:rotate(-8deg)}
-  100%{left:40%;top:4%;transform:rotate(-5deg)}
+  0%{left:50%;top:15%;transform:rotate(-5deg)}
+  15%{left:85%;top:25%;transform:rotate(25deg)}
+  30%{left:80%;top:55%;transform:rotate(15deg)}
+  45%{left:50%;top:70%;transform:rotate(-5deg)}
+  60%{left:15%;top:55%;transform:rotate(-25deg)}
+  75%{left:10%;top:25%;transform:rotate(-15deg)}
+  90%{left:35%;top:12%;transform:rotate(-8deg)}
+  100%{left:50%;top:15%;transform:rotate(-5deg)}
 }
 /* lumber: bear/gorilla/panda — slow heavy sway */
 @keyframes lumber{
-  0%{left:5%;top:80%;transform:rotate(2deg) scale(1)}
-  12%{left:3%;top:50%;transform:rotate(-3deg) scale(1.05)}
-  25%{left:5%;top:15%;transform:rotate(4deg) scale(1)}
-  38%{left:40%;top:5%;transform:rotate(-2deg) scale(1.05)}
-  50%{left:88%;top:10%;transform:rotate(3deg) scale(1)}
-  62%{left:92%;top:50%;transform:rotate(-4deg) scale(1.05)}
-  75%{left:88%;top:82%;transform:rotate(2deg) scale(1)}
-  88%{left:50%;top:88%;transform:rotate(-3deg) scale(1.05)}
-  100%{left:5%;top:80%;transform:rotate(2deg) scale(1)}
+  0%{left:15%;top:60%;transform:rotate(2deg) scale(1)}
+  15%{left:18%;top:55%;transform:rotate(-3deg) scale(1.05)}
+  30%{left:40%;top:50%;transform:rotate(4deg) scale(1)}
+  45%{left:55%;top:55%;transform:rotate(-2deg) scale(1.05)}
+  60%{left:70%;top:48%;transform:rotate(3deg) scale(1)}
+  75%{left:65%;top:58%;transform:rotate(-4deg) scale(1.05)}
+  90%{left:35%;top:62%;transform:rotate(2deg) scale(1)}
+  100%{left:15%;top:60%;transform:rotate(2deg) scale(1)}
 }
 /* dart: dog/hamster/tiger/zebra — fast sharp zigs */
 @keyframes dart{
-  0%{left:3%;top:80%;transform:rotate(0deg)}
-  7%{left:5%;top:12%;transform:rotate(-30deg)}
-  12%{left:6%;top:10%;transform:rotate(-10deg)}
-  20%{left:50%;top:4%;transform:rotate(25deg)}
-  26%{left:88%;top:8%;transform:rotate(8deg)}
-  34%{left:92%;top:15%;transform:rotate(-35deg)}
-  40%{left:90%;top:45%;transform:rotate(-10deg)}
-  48%{left:92%;top:80%;transform:rotate(20deg)}
-  54%{left:88%;top:82%;transform:rotate(5deg)}
-  62%{left:55%;top:88%;transform:rotate(15deg)}
-  72%{left:10%;top:85%;transform:rotate(-25deg)}
-  80%{left:5%;top:82%;transform:rotate(-5deg)}
-  88%{left:3%;top:55%;transform:rotate(20deg)}
-  100%{left:3%;top:80%;transform:rotate(0deg)}
+  0%{left:5%;top:50%;transform:rotate(0deg)}
+  8%{left:35%;top:20%;transform:rotate(-30deg)}
+  14%{left:36%;top:19%;transform:rotate(-10deg)}
+  22%{left:75%;top:55%;transform:rotate(25deg)}
+  28%{left:76%;top:56%;transform:rotate(8deg)}
+  36%{left:45%;top:15%;transform:rotate(-35deg)}
+  42%{left:44%;top:14%;transform:rotate(-10deg)}
+  50%{left:90%;top:40%;transform:rotate(20deg)}
+  56%{left:89%;top:41%;transform:rotate(5deg)}
+  64%{left:55%;top:70%;transform:rotate(15deg)}
+  72%{left:20%;top:30%;transform:rotate(-25deg)}
+  80%{left:18%;top:28%;transform:rotate(-5deg)}
+  88%{left:45%;top:65%;transform:rotate(20deg)}
+  100%{left:5%;top:50%;transform:rotate(0deg)}
 }
 /* flutter: bee/bat/jellyfish — erratic jittery hovering */
 @keyframes flutter{
-  0%{left:5%;top:82%;transform:rotate(0deg)}
-  5%{left:3%;top:75%;transform:rotate(15deg)}
-  10%{left:6%;top:20%;transform:rotate(-10deg)}
-  15%{left:8%;top:10%;transform:rotate(20deg)}
-  20%{left:25%;top:5%;transform:rotate(-5deg)}
-  25%{left:55%;top:3%;transform:rotate(12deg)}
-  30%{left:80%;top:6%;transform:rotate(-15deg)}
-  37%{left:90%;top:15%;transform:rotate(8deg)}
-  45%{left:92%;top:45%;transform:rotate(-12deg)}
-  53%{left:90%;top:75%;transform:rotate(18deg)}
-  60%{left:88%;top:85%;transform:rotate(-8deg)}
-  70%{left:60%;top:88%;transform:rotate(10deg)}
-  80%{left:25%;top:86%;transform:rotate(-14deg)}
-  90%{left:8%;top:84%;transform:rotate(8deg)}
-  100%{left:5%;top:82%;transform:rotate(0deg)}
+  0%{left:40%;top:40%;transform:rotate(0deg)}
+  5%{left:45%;top:35%;transform:rotate(15deg)}
+  10%{left:38%;top:42%;transform:rotate(-10deg)}
+  15%{left:50%;top:30%;transform:rotate(20deg)}
+  20%{left:55%;top:38%;transform:rotate(-5deg)}
+  25%{left:48%;top:28%;transform:rotate(12deg)}
+  30%{left:60%;top:35%;transform:rotate(-15deg)}
+  40%{left:70%;top:25%;transform:rotate(8deg)}
+  50%{left:65%;top:45%;transform:rotate(-12deg)}
+  60%{left:50%;top:55%;transform:rotate(18deg)}
+  70%{left:35%;top:50%;transform:rotate(-8deg)}
+  80%{left:25%;top:35%;transform:rotate(10deg)}
+  90%{left:32%;top:45%;transform:rotate(-14deg)}
+  100%{left:40%;top:40%;transform:rotate(0deg)}
 }
 /* glide: unicorn/turtle/sloth/elk — smooth graceful long arcs */
 @keyframes glide{
-  0%{left:5%;top:82%;transform:rotate(3deg)}
-  16%{left:3%;top:20%;transform:rotate(-8deg)}
-  33%{left:40%;top:4%;transform:rotate(5deg)}
-  50%{left:90%;top:18%;transform:rotate(10deg)}
-  66%{left:92%;top:78%;transform:rotate(-5deg)}
-  83%{left:50%;top:88%;transform:rotate(3deg)}
-  100%{left:5%;top:82%;transform:rotate(3deg)}
+  0%{left:10%;top:45%;transform:rotate(3deg)}
+  20%{left:35%;top:25%;transform:rotate(-8deg)}
+  40%{left:65%;top:35%;transform:rotate(5deg)}
+  60%{left:80%;top:55%;transform:rotate(10deg)}
+  80%{left:45%;top:65%;transform:rotate(-5deg)}
+  100%{left:10%;top:45%;transform:rotate(3deg)}
 }
 
 /* Ambient themed emoji particles */
@@ -416,18 +412,6 @@ body::after{
 
 /* Palette twinkling stars */
 @keyframes starPulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-
-/* Subtle character hearts (elephant) — pulse in and out around the character */
-.ex-heart{
-  position:absolute;font-size:.65rem;opacity:0;pointer-events:none;z-index:3;
-  animation:heartPulse var(--h-dur,3s) ease-in-out var(--h-del,0s) infinite;
-}
-@keyframes heartPulse{
-  0%,100%{opacity:0;transform:scale(.3) translate(0,0)}
-  25%{opacity:.6;transform:scale(.85) translate(var(--h-dx),var(--h-dy))}
-  50%{opacity:.45;transform:scale(1) translate(var(--h-dx2),var(--h-dy2))}
-  75%{opacity:.6;transform:scale(.85) translate(var(--h-dx),var(--h-dy))}
-}
 
 /* ── Responsive ─────────────────────────── */
 @media(max-width:600px){
@@ -623,8 +607,6 @@ const CHARACTERS = [
   {id:'star-sloth',      emoji:'🦥', name:'Star Sloth'},
   {id:'jet-jellyfish',   emoji:'🪼', name:'Jet Jellyfish'},
   {id:'astro-octopus',   emoji:'🐙', name:'Astro Octopus'},
-  {id:'stellar-giraffe', emoji:'🦒', name:'Stellar Giraffe'},
-  {id:'electron-elephant',  emoji:'🐘', name:'Electron Elephant'},
 ];
 
 // ── 10 Levels (all open) ────────────────────────
@@ -880,7 +862,6 @@ const PALETTES = {
   'eclipse-elk':['#3e2723','#6d4c41','#d7ccc8'],'dash-dog':['#ff6e40','#ff9e80','#ffd180'],
   'space-kitten':['#f48fb1','#ce93d8','#b39ddb'],'star-sloth':['#a1887f','#bcaaa4','#d7ccc8'],
   'jet-jellyfish':['#00b8d4','#00e5ff','#84ffff'],'astro-octopus':['#e040fb','#ea80fc','#b388ff'],
-  'stellar-giraffe':['#f9a825','#ffb74d','#ffe0b2'],'electron-elephant':['#90a4ae','#b0bec5','#cfd8dc'],
 };
 
 // ── Character Behaviour Profiles ─────────────────
@@ -922,8 +903,6 @@ const CHAR_BEHAVIORS = {
   'star-sloth':      {move:'glide',   speed:28, trail:['🍃','💤'],      ambient:['🍃','💤','🌿','⭐']},
   'jet-jellyfish':   {move:'flutter', speed:16, trail:['💧','✨'],      ambient:['🫧','💧','🪸','⭐']},
   'astro-octopus':   {move:'swim',    speed:15, trail:['💧','💜'],      ambient:['🫧','💜','🐚','⭐']},
-  'stellar-giraffe': {move:'glide',   speed:20, trail:['🍃','✨'],      ambient:['🍃','☀️','🌿','⭐']},
-  'electron-elephant':  {move:'lumber',  speed:22, trail:['🐾','💕'],      ambient:['💕','🌺','🐾','⭐']},
 };
 const DEFAULT_BEHAVIOR = {move:'glide', speed:16, trail:['✨','💫'], ambient:['⭐','✨','💫','🌟']};
 
@@ -989,34 +968,10 @@ function buildScene(level, palette) {
   ship.appendChild(rocketSpan);
   ship.appendChild(glow);
 
-  // Subtle pulsing hearts around Electron Elephant
-  if (selectedChar?.id === 'electron-elephant') {
-    const hearts = ['💕','💗','💖','♥️'];
-    // Position hearts in a ring around the character emoji
-    const positions = [
-      {x:-14,y:-6}, {x:16,y:-4}, {x:-10,y:10}, {x:12,y:12}, {x:0,y:-14}, {x:-6,y:4}
-    ];
-    for (let i = 0; i < 6; i++) {
-      const h = document.createElement('span');
-      h.className = 'ex-heart';
-      h.textContent = hearts[i % hearts.length];
-      const p = positions[i];
-      h.style.cssText = `
-        left:calc(50% + ${p.x}px);top:${p.y}px;
-        --h-dur:${2.5 + Math.random()*2}s;
-        --h-del:${i * 0.6}s;
-        --h-dx:${-3 + Math.random()*6}px;
-        --h-dy:${-3 + Math.random()*6}px;
-        --h-dx2:${-4 + Math.random()*8}px;
-        --h-dy2:${-4 + Math.random()*8}px;
-      `;
-      ship.appendChild(h);
-    }
-  }
+  // Animate with the character's movement archetype
+  ship.style.animation = `${beh.move} ${beh.speed}s ease-in-out infinite`;
 
-  // JS-driven movement: spirals + random wandering, avoids central question area
   bg.appendChild(ship);
-  startExplorerMovement(ship, beh);
 
   // Exhaust trail with themed emoji particles
   clearInterval(exhaustInterval);
@@ -1061,156 +1016,8 @@ function buildScene(level, palette) {
   }, 100);
 }
 
-// ── JS-driven Explorer Movement Engine ───────────
-let explorerRAF = null;
-
-function startExplorerMovement(ship, beh) {
-  cancelAnimationFrame(explorerRAF);
-
-  const speedMult = 16 / beh.speed;
-
-  // Movement area: only above the question card
-  // Centre of the movement zone, and radii for patterns
-  const CX = 50, CY = 16;   // centre (%)
-  const RX = 32, RY = 10;   // max radii (%)
-
-  // ── Parametric pattern generators ──────────
-  // Each returns {x, y} for a given angle t (radians)
-
-  function spiral(t, progress) {
-    // Inward spiral: radius shrinks then grows
-    const r = 0.4 + 0.6 * Math.abs(Math.sin(progress * Math.PI));
-    return {
-      x: CX + Math.cos(t) * RX * r,
-      y: CY + Math.sin(t) * RY * r
-    };
-  }
-
-  function figure8(t) {
-    // Lemniscate (figure of 8)
-    return {
-      x: CX + Math.sin(t) * RX,
-      y: CY + Math.sin(t * 2) * RY * 0.5
-    };
-  }
-
-  function ellipse(t) {
-    // Tilted ellipse
-    const tilt = 0.3;
-    const ex = Math.cos(t) * RX * 0.85;
-    const ey = Math.sin(t) * RY * 0.9;
-    return {
-      x: CX + ex * Math.cos(tilt) - ey * Math.sin(tilt),
-      y: CY + ex * Math.sin(tilt) + ey * Math.cos(tilt)
-    };
-  }
-
-  function randomDrift(t, wx, wy) {
-    // Smooth Lissajous-like wandering with unique freq ratios
-    return {
-      x: CX + Math.sin(t * wx.a) * RX * 0.7 + Math.sin(t * wx.b) * RX * 0.3,
-      y: CY + Math.sin(t * wy.a) * RY * 0.8 + Math.cos(t * wy.b) * RY * 0.3
-    };
-  }
-
-  // ── Pattern sequencing ─────────────────────
-  const patterns = ['spiral', 'figure8', 'ellipse', 'random'];
-  let patIdx = ~~(Math.random() * patterns.length);
-  let t = Math.random() * Math.PI * 2;  // current angle
-  let patternDuration = 0;               // how long on this pattern
-  let patternLength = 8 + Math.random() * 8; // seconds per pattern
-
-  // Random drift frequencies (unique per session for variety)
-  const wx = {a: 1.0 + Math.random() * 0.4, b: 2.3 + Math.random() * 0.5};
-  const wy = {a: 0.7 + Math.random() * 0.3, b: 1.7 + Math.random() * 0.6};
-
-  // Smooth output position
-  let smoothX = CX, smoothY = CY;
-  let prevX = CX, prevY = CY;
-  let rotation = 0;
-
-  // Transition blending
-  let blendFrom = null;  // previous pattern's last {x,y}
-  let blendT = 1;        // 0→1 blend progress (1 = fully new pattern)
-
-  ship.style.left = smoothX + '%';
-  ship.style.top = smoothY + '%';
-
-  let lastTime = performance.now();
-
-  function tick(now) {
-    explorerRAF = requestAnimationFrame(tick);
-    const dt = Math.min((now - lastTime) / 1000, 0.05);
-    lastTime = now;
-
-    // Advance angle — speed varies by archetype
-    const angularSpeed = (0.5 + speedMult * 0.3) * 1.0;
-    t += dt * angularSpeed;
-    patternDuration += dt;
-
-    // Switch pattern when duration elapsed
-    if (patternDuration >= patternLength) {
-      blendFrom = {x: smoothX, y: smoothY};
-      blendT = 0;
-      patIdx = (patIdx + 1 + ~~(Math.random() * (patterns.length - 1))) % patterns.length;
-      patternDuration = 0;
-      patternLength = 8 + Math.random() * 8;
-    }
-
-    // Compute target from current pattern
-    let target;
-    const pat = patterns[patIdx];
-    if (pat === 'spiral') {
-      const progress = patternDuration / patternLength;
-      target = spiral(t, progress);
-    } else if (pat === 'figure8') {
-      target = figure8(t);
-    } else if (pat === 'ellipse') {
-      target = ellipse(t);
-    } else {
-      target = randomDrift(t, wx, wy);
-    }
-
-    // Blend from previous pattern for seamless transitions
-    if (blendT < 1) {
-      blendT = Math.min(blendT + dt * 0.6, 1); // ~1.7s transition
-      const ease = blendT * blendT * (3 - 2 * blendT); // smoothstep
-      target.x = blendFrom.x + (target.x - blendFrom.x) * ease;
-      target.y = blendFrom.y + (target.y - blendFrom.y) * ease;
-    }
-
-    // Clamp to safe area (above question, within viewport)
-    target.x = Math.max(3, Math.min(95, target.x));
-    target.y = Math.max(1, Math.min(28, target.y));
-
-    // Exponential smoothing for silky movement
-    const sm = Math.pow(0.93, dt * 60);
-    smoothX = smoothX * sm + target.x * (1 - sm);
-    smoothY = smoothY * sm + target.y * (1 - sm);
-
-    // Velocity for gentle rotation
-    const vx = smoothX - prevX;
-    const vy = smoothY - prevY;
-    prevX = smoothX;
-    prevY = smoothY;
-
-    const speed = Math.sqrt(vx * vx + vy * vy);
-    const targetRot = Math.atan2(vy, vx) * (180 / Math.PI) * 0.12;
-    const rotBlend = Math.min(speed * 10, 1);
-    rotation += ((targetRot * rotBlend) - rotation) * Math.min(dt * 2, 0.25);
-
-    ship.style.left = smoothX + '%';
-    ship.style.top = smoothY + '%';
-    ship.style.transform = `rotate(${rotation.toFixed(1)}deg)`;
-  }
-
-  explorerRAF = requestAnimationFrame(tick);
-}
-
 function clearGameBg() {
   clearInterval(exhaustInterval);
-  cancelAnimationFrame(explorerRAF);
-  explorerRAF = null;
   const bg = document.getElementById('game-bg');
   if (bg) bg.innerHTML = '';
 }
